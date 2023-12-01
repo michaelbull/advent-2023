@@ -1,5 +1,7 @@
 package com.github.michaelbull.advent2023.math
 
+import kotlin.math.abs
+
 fun Pair<Int, Int>.toVector2(): Vector2 {
     return Vector2(this)
 }
@@ -96,6 +98,21 @@ data class Vector2(
         return copy(
             x = this.x % range.xRange,
             y = this.y % range.yRange
+        )
+    }
+
+    infix fun cross(other: Vector2): Int {
+        return (this.x * other.y) - (this.y * other.x)
+    }
+
+    infix fun dot(other: Vector2): Int {
+        return (this.x * other.x) + (this.y * other.y)
+    }
+
+    fun abs(): Vector2 {
+        return copy(
+            x = abs(this.x),
+            y = abs(this.y)
         )
     }
 

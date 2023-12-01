@@ -90,6 +90,42 @@ data class Vector3(
         )
     }
 
+    operator fun rem(amount: Int): Vector3 {
+        return copy(
+            x = this.x % amount,
+            y = this.y % amount,
+            z = this.z % amount
+        )
+    }
+
+    operator fun rem(other: Vector3): Vector3 {
+        return copy(
+            x = this.x % other.x,
+            y = this.y % other.y,
+            z = this.z % other.z
+        )
+    }
+
+    operator fun rem(range: Vector3Range): Vector3 {
+        return copy(
+            x = this.x % range.xRange,
+            y = this.y % range.yRange,
+            z = this.z % range.zRange
+        )
+    }
+
+    infix fun cross(other: Vector3): Vector3 {
+        return copy(
+            x = (this.y * other.z) - (this.z * other.y),
+            y = (this.z * other.x) - (this.x * other.z),
+            z = (this.x * other.y) - (this.y * other.x),
+        )
+    }
+
+    infix fun dot(other: Vector3): Int {
+        return (this.x * other.x) + (this.y * other.y) + (this.z * other.z)
+    }
+
     fun abs(): Vector3 {
         return copy(
             x = abs(this.x),

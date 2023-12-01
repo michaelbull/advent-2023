@@ -38,4 +38,19 @@ class Vector3Test {
         assertEquals(Vector3(10, 5, 33), Vector3(30, 15, 99) / 3)
         assertEquals(Vector3(12, 2, 6), Vector3(144, 10, 36) / Vector3(12, 5, 6))
     }
+
+    @Test
+    fun x() {
+        assertEquals(Vector3(-200, 85, -18), Vector3(2, 10, 25) cross Vector3(5, 16, 20))
+    }
+
+    @Test
+    fun dot() {
+        assertEquals(100, Vector3(1, 3, 8) dot Vector3(2, 6, 10))
+    }
+
+    @Test
+    fun abs() {
+        assertEquals(Vector3(10, 15, 20), Vector3(-10, -15, -20).abs())
+    }
 }

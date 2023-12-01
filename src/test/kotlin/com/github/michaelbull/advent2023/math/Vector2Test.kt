@@ -38,4 +38,19 @@ class Vector2Test {
         assertEquals(Vector2(10, 5), Vector2(30, 15) / 3)
         assertEquals(Vector2(12, 2), Vector2(144, 10) / Vector2(12, 5))
     }
+
+    @Test
+    fun cross() {
+        assertEquals(-18, Vector2(2, 10) cross Vector2(5, 16))
+    }
+
+    @Test
+    fun dot() {
+        assertEquals(20, Vector2(1, 3) dot Vector2(2, 6))
+    }
+
+    @Test
+    fun abs() {
+        assertEquals(Vector2(10, 15), Vector2(-10, -15).abs())
+    }
 }
