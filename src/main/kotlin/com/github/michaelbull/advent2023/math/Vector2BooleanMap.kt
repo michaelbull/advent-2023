@@ -52,7 +52,7 @@ class Vector2BooleanMap(
     }
 
     private fun check(x: Int, y: Int) {
-        require(x in xRange) { "x must be in ${xRange}, but was $x" }
-        require(y in yRange) { "y must be in ${yRange}, but was $y" }
+        require(x in xRange) { "x must be in $xRange, but was $x" }
+        require(y in yRange) { "y must be in $yRange, but was $y" }
     }
 }
