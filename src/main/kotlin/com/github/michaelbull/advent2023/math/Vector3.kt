@@ -14,6 +14,10 @@ data class Vector3(
 
     constructor(triple: Triple<Int, Int, Int>) : this(triple.first, triple.second, triple.third)
 
+    operator fun unaryPlus(): Vector3 {
+        return this
+    }
+
     operator fun plus(amount: Int): Vector3 {
         return copy(
             x = this.x + amount,
@@ -27,6 +31,14 @@ data class Vector3(
             x = this.x + other.x,
             y = this.y + other.y,
             z = this.z + other.z
+        )
+    }
+
+    operator fun unaryMinus(): Vector3 {
+        return copy(
+            x = -this.x,
+            y = -this.y,
+            z = -this.z
         )
     }
 

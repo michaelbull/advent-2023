@@ -11,6 +11,10 @@ data class Vector2(
 
     constructor(pair: Pair<Int, Int>) : this(pair.first, pair.second)
 
+    operator fun unaryPlus(): Vector2 {
+        return this
+    }
+
     operator fun plus(amount: Int): Vector2 {
         return copy(
             x = this.x + amount,
@@ -22,6 +26,13 @@ data class Vector2(
         return copy(
             x = this.x + other.x,
             y = this.y + other.y
+        )
+    }
+
+    operator fun unaryMinus(): Vector2 {
+        return copy(
+            x = -this.x,
+            y = -this.y
         )
     }
 

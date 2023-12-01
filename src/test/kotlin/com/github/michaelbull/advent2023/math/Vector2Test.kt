@@ -6,9 +6,19 @@ import kotlin.test.assertEquals
 class Vector2Test {
 
     @Test
+    fun unaryPlus() {
+        assertEquals(Vector2(1, 2), +Vector2(1, 2))
+    }
+
+    @Test
     fun plus() {
         assertEquals(Vector2(25, 17), Vector2(18, 10) + 7)
         assertEquals(Vector2(10, 15), Vector2(4, 10) + Vector2(6, 5))
+    }
+
+    @Test
+    fun unaryMinus() {
+        assertEquals(Vector2(-1, -2), -Vector2(1, 2))
     }
 
     @Test
