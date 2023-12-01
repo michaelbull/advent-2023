@@ -7,7 +7,7 @@ typealias Solution<T, V> = (input: T) -> V
 abstract class Puzzle<T : Any, V : Any>(val day: Int) {
 
     abstract fun parse(lines: Sequence<String>): T
-    abstract fun solutions(): Collection<Solution<T, V>>
+    abstract fun solutions(): Iterable<Solution<T, V>>
 
     fun solve(solution: Solution<T, V>, lines: Sequence<String>): V {
         return solution(parse(lines))
