@@ -1,6 +1,6 @@
 package com.github.michaelbull.advent2023.math
 
-import java.util.*
+import java.util.BitSet
 
 class Vector2BooleanMap(
     val width: Int,
