@@ -19,14 +19,26 @@ private val NUMERICAL_DIGIT = STRING_TO_DIGIT.values.map(Int::toString)
 private val NUMERICAL_STRINGS = NUMERICAL_WORD + NUMERICAL_DIGIT
 
 private fun String.toNumericCalibrationValue(): Int {
-    val firstDigit = firstOrNull(Char::isDigit)?.digitToInt() ?: error("could not find first digit in $this")
-    val secondDigit = lastOrNull(Char::isDigit)?.digitToInt() ?: error("could not find last digit in $this")
+    val firstDigit = requireNotNull(firstOrNull(Char::isDigit)?.digitToInt()) {
+        "could not find first digit in $this"
+    }
+
+    val secondDigit = requireNotNull(lastOrNull(Char::isDigit)?.digitToInt()) {
+        "could not find last digit in $this"
+    }
+
     return "$firstDigit$secondDigit".toInt()
 }
 
 private fun String.toLinguisticCalibrationValue(): Int {
-    val (_, firstString) = findAnyOf(NUMERICAL_STRINGS) ?: error("could not find first digit in $this")
-    val (_, lastString) = findLastAnyOf(NUMERICAL_STRINGS) ?: error("could not find last digit in $this")
+    val (_, firstString) = requireNotNull(findAnyOf(NUMERICAL_STRINGS)) {
+        "could not find first digit in $this"
+    }
+
+    val (_, lastString) = requireNotNull(findLastAnyOf(NUMERICAL_STRINGS)) {
+        "could not find last digit in $this"
+    }
+
     val firstDigit = firstString.toIntOrDigit()
     val secondDigit = lastString.toIntOrDigit()
     return "$firstDigit$secondDigit".toInt()
