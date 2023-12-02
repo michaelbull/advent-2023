@@ -40,7 +40,7 @@ class Vector3Test {
     }
 
     @Test
-    fun x() {
+    fun cross() {
         assertEquals(Vector3(-200, 85, -18), Vector3(2, 10, 25) cross Vector3(5, 16, 20))
     }
 
