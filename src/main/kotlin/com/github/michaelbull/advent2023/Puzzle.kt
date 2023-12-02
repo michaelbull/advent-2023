@@ -9,13 +9,17 @@ abstract class Puzzle<T : Any, V : Any>(val day: Int) {
     abstract fun parse(lines: Sequence<String>): T
     abstract fun solutions(): Iterable<Solution<T, V>>
 
+    fun parse(input: String): T {
+        val lines = input.trimIndent().lineSequence()
+        return parse(lines)
+    }
+
     fun solve(solution: Solution<T, V>, lines: Sequence<String>): V {
         return solution(parse(lines))
     }
 
     fun solve(solution: Solution<T, V>, input: String): V {
-        val lines = input.trimIndent().lineSequence()
-        return solve(solution, lines)
+        return solution(parse(input))
     }
 
     fun solve(solution: Solution<T, V>): V {
