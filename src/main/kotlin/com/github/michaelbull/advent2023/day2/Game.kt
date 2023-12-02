@@ -6,16 +6,11 @@ data class Game(
     val id: Int,
     val sets: List<CubeSet>
 ) {
-    fun isValid(configuration: GameConfiguration): Boolean {
-        for ((color, available) in configuration) {
-            for (set in sets) {
-                if (set.count(color) > available) {
-                    return false
-                }
-            }
-        }
 
-        return true
+    fun isValid(configuration: GameConfiguration): Boolean {
+        return configuration.all { (color, available) ->
+            sets.all { it.count(color) <= available }
+        }
     }
 
     fun minimumPower(): Int {
