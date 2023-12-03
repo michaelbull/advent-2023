@@ -2,7 +2,7 @@ package com.github.michaelbull.advent2023.math
 
 data class Vector3Range(
     override val start: Vector3,
-    override val endInclusive: Vector3
+    override val endInclusive: Vector3,
 ) : Iterable<Vector3>, ClosedRange<Vector3> {
 
     val xRange: IntRange
@@ -83,7 +83,15 @@ data class Vector3Range(
             val current = current
 
             return when {
-                current == null -> start.x < endInclusive.x && start.y < endInclusive.y && start.z < endInclusive.z
+                current == null -> {
+                    when {
+                        start.x < endInclusive.x && start.y <= endInclusive.y && start.z <= endInclusive.z -> true
+                        start.x <= endInclusive.x && start.y < endInclusive.y && start.z <= endInclusive.z -> true
+                        start.x <= endInclusive.x && start.y <= endInclusive.y && start.z < endInclusive.z -> true
+                        else -> false
+                    }
+                }
+
                 current.x < endInclusive.x && current.y <= endInclusive.y && current.z <= endInclusive.z -> true
                 current.x == endInclusive.x && current.y < endInclusive.y && current.z <= endInclusive.z -> true
                 current.x == endInclusive.x && current.y == endInclusive.y && current.z < endInclusive.z -> true
@@ -96,7 +104,9 @@ data class Vector3Range(
 
             next = when {
                 next != null -> next.step()
-                start.x < endInclusive.x && start.y < endInclusive.y && start.z < endInclusive.z -> start
+                start.x < endInclusive.x && start.y <= endInclusive.y && start.z <= endInclusive.z -> start
+                start.x <= endInclusive.x && start.y < endInclusive.y && start.z <= endInclusive.z -> start
+                start.x <= endInclusive.x && start.y <= endInclusive.y && start.z < endInclusive.z -> start
                 else -> throw NoSuchElementException()
             }
 

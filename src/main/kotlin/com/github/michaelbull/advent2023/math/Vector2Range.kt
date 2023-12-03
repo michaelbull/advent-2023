@@ -4,7 +4,7 @@ import kotlin.math.abs
 
 data class Vector2Range(
     override val start: Vector2,
-    override val endInclusive: Vector2
+    override val endInclusive: Vector2,
 ) : Iterable<Vector2>, ClosedRange<Vector2> {
 
     val isHorizontal: Boolean
@@ -88,7 +88,14 @@ data class Vector2Range(
             val current = current
 
             return when {
-                current == null -> start.x < endInclusive.x && start.y < endInclusive.y
+                current == null -> {
+                    when {
+                        start.x < endInclusive.x && start.y <= endInclusive.y -> true
+                        start.x <= endInclusive.y && start.y < endInclusive.y -> true
+                        else -> false
+                    }
+                }
+
                 current.x < endInclusive.x && current.y <= endInclusive.y -> true
                 current.x == endInclusive.x && current.y < endInclusive.y -> true
                 else -> false
@@ -100,7 +107,8 @@ data class Vector2Range(
 
             next = when {
                 next != null -> next.step()
-                start.x < endInclusive.x && start.y < endInclusive.y -> start
+                start.x < endInclusive.x && start.y <= endInclusive.y -> start
+                start.x <= endInclusive.x && start.y < endInclusive.y -> start
                 else -> throw NoSuchElementException()
             }
 
