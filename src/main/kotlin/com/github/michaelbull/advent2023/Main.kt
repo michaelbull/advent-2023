@@ -2,12 +2,14 @@ package com.github.michaelbull.advent2023
 
 import com.github.michaelbull.advent2023.day1.Day1
 import com.github.michaelbull.advent2023.day2.Day2
+import com.github.michaelbull.advent2023.day3.Day3
 import kotlin.time.measureTimedValue
 
 fun main() {
     val puzzles = listOf(
         Day1,
         Day2,
+        Day3,
     )
 
     for (puzzle in puzzles) {
