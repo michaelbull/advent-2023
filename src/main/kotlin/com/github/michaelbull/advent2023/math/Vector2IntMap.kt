@@ -3,7 +3,7 @@ package com.github.michaelbull.advent2023.math
 class Vector2IntMap(
     val width: Int,
     val height: Int,
-    init: (Vector2) -> Int = { 0 }
+    init: (Vector2) -> Int = { DEFAULT_VALUE }
 ) {
 
     val xRange = 0 until width
@@ -45,14 +45,14 @@ class Vector2IntMap(
     }
 
     private fun check(x: Int, y: Int) {
-        require(x in xRange) { "x must be in ${xRange}, but was $x" }
-        require(y in yRange) { "y must be in ${yRange}, but was $y" }
+        require(x in xRange) { "x must be in $xRange, but was $x" }
+        require(y in yRange) { "y must be in $yRange, but was $y" }
     }
 
     fun copy(width: Int = this.width, height: Int = this.height): Vector2IntMap {
         return Vector2IntMap(width, height) { (x, y) ->
             if (x !in xRange || y !in yRange) {
-                0
+                DEFAULT_VALUE
             } else {
                 this[x, y]
             }
@@ -69,5 +69,9 @@ class Vector2IntMap(
 
     override fun hashCode(): Int {
         return values.contentHashCode()
+    }
+
+    private companion object {
+        private const val DEFAULT_VALUE = 0
     }
 }

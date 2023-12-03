@@ -126,6 +126,15 @@ data class Vector3(
         return (this.x * other.x) + (this.y * other.y) + (this.z * other.z)
     }
 
+    infix fun adjacentTo(other: Vector3): Boolean {
+        val (x1, y1, z1) = this
+        val (x2, y2, z2) = other
+        val deltaX = abs(x2 - x1)
+        val deltaY = abs(y2 - y1)
+        val deltaZ = abs(z2 - z1)
+        return deltaX <= 1 && deltaY <= 1 && deltaZ <= 1
+    }
+
     fun abs(): Vector3 {
         return copy(
             x = abs(this.x),
