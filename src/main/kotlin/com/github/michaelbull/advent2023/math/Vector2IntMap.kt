@@ -4,7 +4,7 @@ class Vector2IntMap(
     val width: Int,
     val height: Int,
     init: (Vector2) -> Int = { DEFAULT_VALUE }
-) {
+) : Iterable<Vector2> {
 
     val xRange = 0 until width
     val yRange = 0 until height
@@ -69,6 +69,14 @@ class Vector2IntMap(
 
     override fun hashCode(): Int {
         return values.contentHashCode()
+    }
+
+    override fun iterator() = iterator {
+        for (x in xRange) {
+            for (y in yRange) {
+                yield(Vector2(x, y))
+            }
+        }
     }
 
     private companion object {
