@@ -107,18 +107,18 @@ data class Vector3Range(
         private fun Vector3.step(): Vector3 {
             return when {
                 x < endInclusive.x && y <= endInclusive.y && z <= endInclusive.z -> copy(
-                    x = x + 1
+                    x = x + 1,
                 )
 
                 x == endInclusive.x && y < endInclusive.y && z <= endInclusive.z -> copy(
                     x = start.x,
-                    y = y + 1
+                    y = y + 1,
                 )
 
                 x == endInclusive.x && y == endInclusive.y && z < endInclusive.z -> copy(
                     x = start.x,
                     y = start.y,
-                    z = z + 1
+                    z = z + 1,
                 )
 
                 else -> throw NoSuchElementException()

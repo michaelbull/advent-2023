@@ -111,12 +111,12 @@ data class Vector2Range(
         private fun Vector2.step(): Vector2 {
             return when {
                 x < endInclusive.x && y <= endInclusive.y -> copy(
-                    x = x + 1
+                    x = x + 1,
                 )
 
                 x == endInclusive.x && y < endInclusive.y -> copy(
                     x = start.x,
-                    y = y + 1
+                    y = y + 1,
                 )
 
                 else -> throw NoSuchElementException()

@@ -23,7 +23,7 @@ sealed interface CubeColor {
 val CUBE_COLORS = setOf(
     CubeColor.Red,
     CubeColor.Green,
-    CubeColor.Blue
+    CubeColor.Blue,
 )
 
 fun String.toCubeColor(): CubeColor {

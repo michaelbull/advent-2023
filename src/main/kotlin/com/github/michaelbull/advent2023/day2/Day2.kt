@@ -17,7 +17,7 @@ object Day2 : Puzzle<Sequence<Game>, Int>(day = 2) {
         val configuration = mapOf(
             CubeColor.Red to 12,
             CubeColor.Green to 13,
-            CubeColor.Blue to 14
+            CubeColor.Blue to 14,
         )
 
         return input

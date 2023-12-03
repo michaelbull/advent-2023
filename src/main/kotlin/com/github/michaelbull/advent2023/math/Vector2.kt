@@ -20,84 +20,84 @@ data class Vector2(
     operator fun plus(amount: Int): Vector2 {
         return copy(
             x = this.x + amount,
-            y = this.y + amount
+            y = this.y + amount,
         )
     }
 
     operator fun plus(other: Vector2): Vector2 {
         return copy(
             x = this.x + other.x,
-            y = this.y + other.y
+            y = this.y + other.y,
         )
     }
 
     operator fun unaryMinus(): Vector2 {
         return copy(
             x = -this.x,
-            y = -this.y
+            y = -this.y,
         )
     }
 
     operator fun minus(amount: Int): Vector2 {
         return copy(
             x = this.x - amount,
-            y = this.y - amount
+            y = this.y - amount,
         )
     }
 
     operator fun minus(other: Vector2): Vector2 {
         return copy(
             x = this.x - other.x,
-            y = this.y - other.y
+            y = this.y - other.y,
         )
     }
 
     operator fun times(amount: Int): Vector2 {
         return copy(
             x = this.x * amount,
-            y = this.y * amount
+            y = this.y * amount,
         )
     }
 
     operator fun times(other: Vector2): Vector2 {
         return copy(
             x = this.x * other.x,
-            y = this.y * other.y
+            y = this.y * other.y,
         )
     }
 
     operator fun div(amount: Int): Vector2 {
         return copy(
             x = this.x / amount,
-            y = this.y / amount
+            y = this.y / amount,
         )
     }
 
     operator fun div(other: Vector2): Vector2 {
         return copy(
             x = this.x / other.x,
-            y = this.y / other.y
+            y = this.y / other.y,
         )
     }
 
     operator fun rem(amount: Int): Vector2 {
         return copy(
             x = this.x % amount,
-            y = this.y % amount
+            y = this.y % amount,
         )
     }
 
     operator fun rem(other: Vector2): Vector2 {
         return copy(
             x = this.x % other.x,
-            y = this.y % other.y
+            y = this.y % other.y,
         )
     }
 
     operator fun rem(range: Vector2Range): Vector2 {
         return copy(
             x = this.x % range.xRange,
-            y = this.y % range.yRange
+            y = this.y % range.yRange,
         )
     }
 
@@ -127,14 +127,14 @@ data class Vector2(
     fun coerceAtLeast(minimumValue: Vector2): Vector2 {
         return copy(
             x = x.coerceAtLeast(minimumValue.x),
-            y = y.coerceAtLeast(minimumValue.y)
+            y = y.coerceAtLeast(minimumValue.y),
         )
     }
 
     fun coerceAtMost(maximumValue: Vector2): Vector2 {
         return copy(
             x = x.coerceAtMost(maximumValue.x),
-            y = y.coerceAtMost(maximumValue.y)
+            y = y.coerceAtMost(maximumValue.y),
         )
     }
 

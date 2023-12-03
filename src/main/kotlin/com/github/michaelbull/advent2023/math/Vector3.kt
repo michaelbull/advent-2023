@@ -22,7 +22,7 @@ data class Vector3(
         return copy(
             x = this.x + amount,
             y = this.y + amount,
-            z = this.z + amount
+            z = this.z + amount,
         )
     }
 
@@ -30,7 +30,7 @@ data class Vector3(
         return copy(
             x = this.x + other.x,
             y = this.y + other.y,
-            z = this.z + other.z
+            z = this.z + other.z,
         )
     }
 
@@ -38,7 +38,7 @@ data class Vector3(
         return copy(
             x = -this.x,
             y = -this.y,
-            z = -this.z
+            z = -this.z,
         )
     }
 
@@ -46,7 +46,7 @@ data class Vector3(
         return copy(
             x = this.x - amount,
             y = this.y - amount,
-            z = this.z - amount
+            z = this.z - amount,
         )
     }
 
@@ -54,7 +54,7 @@ data class Vector3(
         return copy(
             x = this.x - other.x,
             y = this.y - other.y,
-            z = this.z - other.z
+            z = this.z - other.z,
         )
     }
 
@@ -62,7 +62,7 @@ data class Vector3(
         return copy(
             x = this.x * amount,
             y = this.y * amount,
-            z = this.z * amount
+            z = this.z * amount,
         )
     }
 
@@ -70,7 +70,7 @@ data class Vector3(
         return copy(
             x = this.x * other.x,
             y = this.y * other.y,
-            z = this.z * other.z
+            z = this.z * other.z,
         )
     }
 
@@ -78,7 +78,7 @@ data class Vector3(
         return copy(
             x = this.x / amount,
             y = this.y / amount,
-            z = this.z / amount
+            z = this.z / amount,
         )
     }
 
@@ -86,7 +86,7 @@ data class Vector3(
         return copy(
             x = this.x / other.x,
             y = this.y / other.y,
-            z = this.z / other.z
+            z = this.z / other.z,
         )
     }
 
@@ -94,7 +94,7 @@ data class Vector3(
         return copy(
             x = this.x % amount,
             y = this.y % amount,
-            z = this.z % amount
+            z = this.z % amount,
         )
     }
 
@@ -102,7 +102,7 @@ data class Vector3(
         return copy(
             x = this.x % other.x,
             y = this.y % other.y,
-            z = this.z % other.z
+            z = this.z % other.z,
         )
     }
 
@@ -110,7 +110,7 @@ data class Vector3(
         return copy(
             x = this.x % range.xRange,
             y = this.y % range.yRange,
-            z = this.z % range.zRange
+            z = this.z % range.zRange,
         )
     }
 
@@ -139,7 +139,7 @@ data class Vector3(
         return copy(
             x = abs(this.x),
             y = abs(this.y),
-            z = abs(this.z)
+            z = abs(this.z),
         )
     }
 
@@ -147,7 +147,7 @@ data class Vector3(
         return copy(
             x = x.coerceAtLeast(minimumValue.x),
             y = y.coerceAtLeast(minimumValue.y),
-            z = z.coerceAtLeast(minimumValue.z)
+            z = z.coerceAtLeast(minimumValue.z),
         )
     }
 
@@ -155,7 +155,7 @@ data class Vector3(
         return copy(
             x = x.coerceAtMost(maximumValue.x),
             y = y.coerceAtMost(maximumValue.y),
-            z = z.coerceAtMost(maximumValue.z)
+            z = z.coerceAtMost(maximumValue.z),
         )
     }
 
