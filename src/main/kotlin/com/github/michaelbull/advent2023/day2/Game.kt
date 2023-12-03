@@ -14,9 +14,7 @@ data class Game(
     }
 
     fun minimumPower(): Int {
-        return minimumConfiguration().values.reduce { acc, count ->
-            acc * count
-        }
+        return minimumConfiguration().values.reduce(Int::times)
     }
 
     private fun minimumConfiguration(): GameConfiguration {
