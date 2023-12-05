@@ -18,14 +18,15 @@ object Day5 : Puzzle<Almanac, Long>(day = 5) {
     }
 
     fun part2(input: Almanac): Long {
-        val reversed = input.reverse()
-        val seedRanges = input.seeds.toRangePairs()
-
-        return LOCATION_NUMBERS.first { locationNumber ->
-            val seed = reversed.maps.lookup(locationNumber)
-            seedRanges.any { seed in it }
-        }
+        return input.maps
+            .lookup(input.seeds.toRangePairs())
+            .minOf(LongRange::start)
     }
 
-    private val LOCATION_NUMBERS = 0L..Long.MAX_VALUE
+    private fun List<Long>.toRangePairs(): List<LongRange> {
+        return chunked(2).map { (start, length) ->
+            val end = start + length
+            start..<end
+        }
+    }
 }

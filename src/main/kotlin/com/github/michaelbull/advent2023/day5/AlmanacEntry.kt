@@ -1,14 +1,14 @@
 package com.github.michaelbull.advent2023.day5
 
 fun String.toAlmanacEntry(): AlmanacEntry {
-    val (destinationRangeStart, sourceRangeStart, rangeLength) = split(" ").map(String::toLong)
+    val (destinationStart, sourceStart, length) = split(" ").map(String::toLong)
 
-    val sourceRangeEnd = sourceRangeStart + rangeLength
-    val destinationRangeEnd = destinationRangeStart + rangeLength
+    val sourceEnd = sourceStart + length
+    val destinationEnd = destinationStart + length
 
     return AlmanacEntry(
-        source = sourceRangeStart until sourceRangeEnd,
-        destination = destinationRangeStart until destinationRangeEnd
+        source = sourceStart..<sourceEnd,
+        destination = destinationStart..<destinationEnd
     )
 }
 
@@ -17,19 +17,16 @@ data class AlmanacEntry(
     val destination: LongRange,
 ) {
 
-    fun reverse(): AlmanacEntry {
-        return copy(
-            source = destination,
-            destination = source
-        )
-    }
-
-    operator fun get(value: Long): Long? {
+    fun getOrNull(value: Long): Long? {
         return if (value in source) {
             val offset = value - source.first
             destination.first + offset
         } else {
             null
         }
+    }
+
+    operator fun get(value: Long): Long {
+        return getOrNull(value) ?: value
     }
 }
