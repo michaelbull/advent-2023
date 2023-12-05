@@ -6,8 +6,8 @@ class Vector2IntMap(
     init: (Vector2) -> Int = { DEFAULT_VALUE }
 ) : Iterable<Vector2> {
 
-    val xRange = 0 until width
-    val yRange = 0 until height
+    val xRange = 0..<width
+    val yRange = 0..<height
 
     private val values = IntArray(width * height) { position ->
         val x = position % width

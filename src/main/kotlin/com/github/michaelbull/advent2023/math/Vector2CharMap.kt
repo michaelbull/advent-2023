@@ -6,8 +6,8 @@ class Vector2CharMap(
     init: (Vector2) -> Char = { DEFAULT_VALUE }
 ) : Iterable<Vector2> {
 
-    val xRange = 0 until width
-    val yRange = 0 until height
+    val xRange = 0..<width
+    val yRange = 0..<height
 
     private val values = CharArray(width * height) { position ->
         val x = position % width

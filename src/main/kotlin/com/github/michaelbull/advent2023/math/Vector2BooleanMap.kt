@@ -1,6 +1,6 @@
 package com.github.michaelbull.advent2023.math
 
-import java.util.BitSet
+import java.util.*
 
 class Vector2BooleanMap(
     val width: Int,
@@ -8,8 +8,8 @@ class Vector2BooleanMap(
     init: (Vector2) -> Boolean = { DEFAULT_VALUE }
 ) : Iterable<Vector2> {
 
-    val xRange = 0 until width
-    val yRange = 0 until height
+    val xRange = 0..<width
+    val yRange = 0..<height
 
     private val values = BitSet(width * height)
 
