@@ -4,6 +4,7 @@ import com.github.michaelbull.advent2023.day1.Day1
 import com.github.michaelbull.advent2023.day2.Day2
 import com.github.michaelbull.advent2023.day3.Day3
 import com.github.michaelbull.advent2023.day4.Day4
+import com.github.michaelbull.advent2023.day5.Day5
 import kotlin.time.measureTimedValue
 
 fun main() {
@@ -12,6 +13,7 @@ fun main() {
         Day2,
         Day3,
         Day4,
+        Day5,
     )
 
     for (puzzle in puzzles) {
