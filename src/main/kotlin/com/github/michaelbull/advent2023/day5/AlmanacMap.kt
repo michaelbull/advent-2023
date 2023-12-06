@@ -8,7 +8,7 @@ fun Iterable<AlmanacMap>.lookup(index: Long): Long {
 
 fun Iterable<AlmanacMap>.lookup(ranges: List<LongRange>): List<LongRange> {
     return fold(ranges) { acc, map ->
-        map[acc]
+        acc.flatMap(map::get)
     }
 }
 
@@ -26,40 +26,35 @@ data class AlmanacMap(
             ?: key
     }
 
-    operator fun get(ranges: List<LongRange>): List<LongRange> {
-        return ranges.flatMap(::get)
-    }
-
-    private fun get(range: LongRange): List<LongRange> = buildList {
-        var start = range.first
-        val end = range.last
+    operator fun get(keys: LongRange): Sequence<LongRange> = sequence {
+        var start = keys.first
+        val end = keys.last
 
         for (entry in sortedEntries) {
             val (source, destination) = entry
 
-            if (start in source) {
-                if (end in source) {
-                    add(entry[start]..entry[end])
-                    start = end + 1
-                    break
-                } else {
-                    add(entry[start]..destination.last)
+            val startWithin = start in source
+            val endWithin = end in source
+
+            when {
+                startWithin && endWithin -> {
+                    yield(entry[start]..entry[end])
+                    return@sequence
+                }
+
+                startWithin -> {
+                    yield(entry[start]..destination.last)
                     start = source.last + 1
                 }
-            }
 
-            if (end in source) {
-                add(start..<source.first)
-                add(destination.first..entry[end])
-                start = end + 1
-                break
+                endWithin -> {
+                    yield(start..<source.first)
+                    yield(destination.first..entry[end])
+                    return@sequence
+                }
             }
         }
 
-        val remaining = start..<end
-
-        if (!remaining.isEmpty()) {
-            add(remaining)
-        }
+        yield(start..end)
     }
 }

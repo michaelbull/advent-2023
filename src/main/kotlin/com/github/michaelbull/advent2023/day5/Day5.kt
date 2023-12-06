@@ -19,11 +19,11 @@ object Day5 : Puzzle<Almanac, Long>(day = 5) {
 
     fun part2(input: Almanac): Long {
         return input.maps
-            .lookup(input.seeds.toRangePairs())
+            .lookup(input.seeds.toRangeList())
             .minOf(LongRange::start)
     }
 
-    private fun List<Long>.toRangePairs(): List<LongRange> {
+    private fun List<Long>.toRangeList(): List<LongRange> {
         return chunked(2).map { (start, length) ->
             val end = start + length
             start..<end

@@ -17,16 +17,16 @@ data class AlmanacEntry(
     val destination: LongRange,
 ) {
 
-    fun getOrNull(value: Long): Long? {
-        return if (value in source) {
-            val offset = value - source.first
+    fun getOrNull(key: Long): Long? {
+        return if (key in source) {
+            val offset = key - source.first
             destination.first + offset
         } else {
             null
         }
     }
 
-    operator fun get(value: Long): Long {
-        return getOrNull(value) ?: value
+    operator fun get(key: Long): Long {
+        return getOrNull(key) ?: key
     }
 }
