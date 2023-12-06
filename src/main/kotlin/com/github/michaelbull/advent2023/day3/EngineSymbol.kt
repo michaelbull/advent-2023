@@ -25,15 +25,10 @@ fun Char.isGearSymbol(): Boolean {
     return this == GEAR_SYMBOL
 }
 
-fun Char.inEngineAt(position: Vector2): EngineSymbol {
-    return EngineSymbol(position, this)
-}
-
 data class EngineSymbol(
     override val position: Vector2,
     val value: Char,
 ) : EngineItem {
-
     fun isGear(): Boolean {
         return value.isGearSymbol()
     }

@@ -43,15 +43,9 @@ fun Sequence<String>.toEngineSchematic(): EngineSchematic {
         }
     }
 
-    val symbols = data.mapNotNull { position ->
-        val char = data[position]
-
-        if (char.isEngineSymbol()) {
-            char.inEngineAt(position)
-        } else {
-            null
-        }
-    }
+    val symbols = data
+        .filter { (_, value) -> value.isEngineSymbol() }
+        .map { (position, value) -> EngineSymbol(position, value) }
 
     return EngineSchematic(
         numbers,
@@ -64,38 +58,38 @@ data class EngineSchematic(
     val symbols: List<EngineSymbol>,
 ) {
 
+    private val symbolPositions = symbols.map(EngineSymbol::position)
+    private val gearPositions = symbols.filter(EngineSymbol::isGear).map(EngineSymbol::position)
+
     fun partNumbers(): List<Int> {
         return numbers
-            .filter(::adjacentToSymbol)
+            .filter(::isAdjacentToSymbol)
             .map(EngineNumber::value)
     }
 
     fun gearRatios(): List<Int> {
-        return numbersAdjacentToGears()
-            .map { (a, b) -> a * b }
+        return gearPositions
+            .map(::numbersAdjacentTo)
+            .filter(::isBinary)
+            .map(::ratio)
     }
 
-    private fun adjacentToSymbol(number: EngineNumber): Boolean {
-        return symbols.any { (symbolPosition) ->
-            number adjacentTo symbolPosition
-        }
-    }
-
-    private fun gearSymbols(): List<EngineSymbol> {
-        return symbols.filter(EngineSymbol::isGear)
-    }
-
-    private fun numbersAdjacentToGears(): List<Pair<Int, Int>> {
-        return gearSymbols()
-            .map { (gearPosition) -> numbersAdjacentTo(gearPosition) }
-            .filter { adjacentNumbers -> adjacentNumbers.size == 2 }
-            .map { (first, second) -> first.value to second.value }
+    private fun isAdjacentToSymbol(number: EngineNumber): Boolean {
+        return symbolPositions.any(number::adjacentTo)
     }
 
     private fun numbersAdjacentTo(position: Vector2): List<EngineNumber> {
         return numbers.filter { number ->
             number adjacentTo position
         }
+    }
+
+    private fun <E> isBinary(collection: Collection<E>): Boolean {
+        return collection.size == 2
+    }
+
+    private fun ratio(list: List<EngineNumber>): Int {
+        return list[0].value * list[1].value
     }
 }
 

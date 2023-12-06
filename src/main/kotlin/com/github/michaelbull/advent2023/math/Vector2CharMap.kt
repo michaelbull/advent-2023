@@ -4,7 +4,7 @@ class Vector2CharMap(
     val width: Int,
     val height: Int,
     init: (Vector2) -> Char = { DEFAULT_VALUE }
-) : Iterable<Vector2> {
+) : Iterable<Pair<Vector2, Char>> {
 
     val xRange = 0..<width
     val yRange = 0..<height
@@ -43,26 +43,36 @@ class Vector2CharMap(
         return position.x in xRange && position.y in yRange
     }
 
-    private fun indexOf(position: Vector2): Int {
-        return indexOf(position.x, position.y)
-    }
-
-    private fun indexOf(x: Int, y: Int): Int {
-        check(x, y)
-        return (y * width) + x
-    }
-
-    private fun check(x: Int, y: Int) {
-        require(x in xRange) { "x must be in $xRange, but was $x" }
-        require(y in yRange) { "y must be in $yRange, but was $y" }
-    }
-
     fun copy(width: Int = this.width, height: Int = this.height): Vector2CharMap {
         return Vector2CharMap(width, height) { (x, y) ->
             if (x !in xRange || y !in yRange) {
                 DEFAULT_VALUE
             } else {
                 this[x, y]
+            }
+        }
+    }
+
+    fun positionsIterator() = iterator {
+        for (x in xRange) {
+            for (y in yRange) {
+                yield(Vector2(x, y))
+            }
+        }
+    }
+
+    fun positions(): Iterable<Vector2> {
+        return Iterable(::positionsIterator)
+    }
+
+    override fun iterator(): Iterator<Pair<Vector2, Char>> {
+        return iterator {
+            for (x in xRange) {
+                for (y in yRange) {
+                    val index = indexOf(x, y)
+                    val position = Vector2(x, y)
+                    yield(position to values[index])
+                }
             }
         }
     }
@@ -79,12 +89,18 @@ class Vector2CharMap(
         return values.contentHashCode()
     }
 
-    override fun iterator() = iterator {
-        for (x in xRange) {
-            for (y in yRange) {
-                yield(Vector2(x, y))
-            }
-        }
+    private fun indexOf(position: Vector2): Int {
+        return indexOf(position.x, position.y)
+    }
+
+    private fun indexOf(x: Int, y: Int): Int {
+        requireInBounds(x, y)
+        return (y * width) + x
+    }
+
+    private fun requireInBounds(x: Int, y: Int) {
+        require(x in xRange) { "x must be in $xRange, but was $x" }
+        require(y in yRange) { "y must be in $yRange, but was $y" }
     }
 
     private companion object {
