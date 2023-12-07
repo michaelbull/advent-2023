@@ -17,19 +17,20 @@ object Day7 : Puzzle<Sequence<String>, Long>(day = 7) {
         return input
             .map(String::toBid)
             .sortedWith(RankComparator)
-            .mapIndexed(::winnings)
-            .sum()
+            .withIndex()
+            .sumOf(::winnings)
     }
 
     fun part2(input: Sequence<String>): Long {
         return input
             .map(String::toJokerBid)
             .sortedWith(RankComparator)
-            .mapIndexed(::winnings)
-            .sum()
+            .withIndex()
+            .sumOf(::winnings)
     }
 
-    private fun winnings(index: Int, bid: Bid): Long {
+    private fun winnings(value: IndexedValue<Bid>): Long {
+        val (index, bid) = value
         val rank = index + 1
         return bid.amount * rank
     }
