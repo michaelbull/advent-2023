@@ -20,7 +20,7 @@ fun String.toCubeCount(): CubeCount {
         "$this must match $REGEX"
     }
 
-    val (_, count, color) = result.groupValues
+    val (count, color) = result.destructured
 
     return CubeCount(
         count = count.toInt(),

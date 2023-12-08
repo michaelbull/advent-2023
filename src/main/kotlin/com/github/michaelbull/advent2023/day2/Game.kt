@@ -35,7 +35,7 @@ fun String.toGame(): Game {
         "$this must match $REGEX"
     }
 
-    val (_, id, sets) = result.groupValues
+    val (id, sets) = result.destructured
 
     return Game(
         id = id.toInt(),

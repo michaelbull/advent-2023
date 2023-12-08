@@ -15,7 +15,7 @@ fun String.toScratchCard(): Scratchcard {
         "$this must match $CARD_REGEX"
     }
 
-    val (_, id, winningNumbers, ownedNumbers) = result.groupValues
+    val (id, winningNumbers, ownedNumbers) = result.destructured
 
     return Scratchcard(
         id = id.toInt(),

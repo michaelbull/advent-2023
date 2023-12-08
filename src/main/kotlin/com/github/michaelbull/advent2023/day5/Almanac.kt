@@ -66,7 +66,7 @@ private fun String.toSeedList(): List<Long> {
         "$this must match $SEEDS_REGEX"
     }
 
-    val (_, numbers) = result.groupValues
+    val (numbers) = result.destructured
 
     return numbers
         .split(" ")

@@ -17,7 +17,7 @@ fun Sequence<String>.toDesertMap(): DesertMap {
                 "$line must match $NETWORK_REGEX"
             }
 
-            val (_, from, left, right) = result.groupValues
+            val (from, left, right) = result.destructured
 
             network[Node(from)] = listOf(Node(left), Node(right))
         }
