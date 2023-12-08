@@ -5,15 +5,15 @@ import kotlin.math.abs
 /* https://en.wikipedia.org/wiki/Greatest_common_divisor */
 
 tailrec fun greatestCommonDivisor(a: Long, b: Long): Long {
-    return if (a == 0L) {
-        abs(b)
+    return if (b == 0L) {
+        a
     } else {
-        greatestCommonDivisor(b % a, a)
+        greatestCommonDivisor(b, a % b)
     }
 }
 
 fun leastCommonMultiple(a: Long, b: Long): Long {
-    return (a * b) / greatestCommonDivisor(a, b)
+    return abs(a * b) / greatestCommonDivisor(a, b)
 }
 
 /* https://en.wikipedia.org/wiki/Triangular_number */
