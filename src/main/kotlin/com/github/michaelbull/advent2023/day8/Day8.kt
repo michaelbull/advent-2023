@@ -21,9 +21,9 @@ object Day8 : Puzzle<DesertMap, Long>(day = 8) {
     }
 
     fun part2(input: DesertMap): Long {
-        fun isStart(node: Node) = node.label.endsWith("A")
-        fun isEnd(node: Node) = node.label.endsWith("Z")
-
-        return input.stepCount(::isStart, ::isEnd)
+        return input.stepCount(
+            isStart = { (label) -> label.endsWith("A") },
+            isEnd = { (label) -> label.endsWith("Z") }
+        )
     }
 }

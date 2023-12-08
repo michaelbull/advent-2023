@@ -57,7 +57,7 @@ data class DesertMap(
     private fun traverse(start: Node, isEnd: (Node) -> Boolean) = sequence {
         var cur = start
 
-        for (instruction in instructions.asRepeatingSequence()) {
+        for (instruction in instructions.asSequence().repeating()) {
             cur = cur.next(instruction)
             yield(cur)
 
@@ -76,11 +76,9 @@ data class DesertMap(
         }
     }
 
-    private fun <T> List<T>.asRepeatingSequence(): Sequence<T> {
-        val indices = generateSequence(0) { index ->
-            (index + 1) % size
+    private fun <T> Sequence<T>.repeating() = sequence {
+        while (true) {
+            yieldAll(this@repeating)
         }
-
-        return indices.map(::get)
     }
 }
