@@ -41,11 +41,10 @@ data class DesertMap(
     }
 
     fun stepCount(isStart: (Node) -> Boolean, isEnd: (Node) -> Boolean): Long {
-        val counts = network.keys
+        return network.keys
             .filter(isStart)
             .map { start -> stepCount(start, isEnd) }
-
-        return counts.fold(1L, ::leastCommonMultiple)
+            .reduce(::leastCommonMultiple)
     }
 
     private fun stepCount(start: Node, isEnd: (Node) -> Boolean): Long {
