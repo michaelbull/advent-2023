@@ -8,6 +8,7 @@ import com.github.michaelbull.advent2023.day5.Day5
 import com.github.michaelbull.advent2023.day6.Day6
 import com.github.michaelbull.advent2023.day7.Day7
 import com.github.michaelbull.advent2023.day8.Day8
+import com.github.michaelbull.advent2023.day9.Day9
 import kotlin.time.measureTimedValue
 
 fun main() {
@@ -20,6 +21,7 @@ fun main() {
         Day6,
         Day7,
         Day8,
+        Day9,
     )
 
     for (puzzle in puzzles) {
@@ -29,7 +31,7 @@ fun main() {
 
 private fun <T : Any, V : Any> Puzzle<T, V>.solve() {
     println("")
-    println("Day ${day}:")
+    println("Day $day:")
 
     for ((index, solution) in solutions().withIndex()) {
         val (answer, duration) = measureTimedValue { solve(solution) }
