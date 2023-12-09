@@ -24,11 +24,11 @@ data class History(
         return values.reversed().extrapolate()
     }
 
-    private fun List<Int>.extrapolate(): Int {
+    private tailrec fun List<Int>.extrapolate(result: Int = 0): Int {
         return if (allZero()) {
-            0
+            result
         } else {
-            last() + zipDifferences().extrapolate()
+            zipDifferences().extrapolate(result + last())
         }
     }
 
