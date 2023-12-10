@@ -1,15 +1,7 @@
 package com.github.michaelbull.advent2023.day9
 
-private val NUMBER_REGEX = "-?\\d+".toRegex()
-
 fun String.toHistory(): History {
-    val values = NUMBER_REGEX.findAll(this)
-        .map { it.value.toInt() }
-        .toList()
-
-    return History(
-        values = values
-    )
+    return History(split(" ").map(String::toInt))
 }
 
 data class History(
