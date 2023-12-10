@@ -1,18 +1,10 @@
 package com.github.michaelbull.advent2023.day3
 
 import com.github.michaelbull.advent2023.math.Vector2
-import com.github.michaelbull.advent2023.math.Vector2CharMap
+import com.github.michaelbull.advent2023.math.toVector2CharMap
 
 fun Sequence<String>.toEngineSchematic(): EngineSchematic {
-    val lines = this.toList()
-    val width = lines.first().length
-    val height = lines.size
-
-    val data = Vector2CharMap(width, height) { (x, y) ->
-        val line = lines[y]
-        val char = line[x]
-        char
-    }
+    val data = this.toVector2CharMap()
 
     val numbers = buildList {
         for (y in data.yRange) {

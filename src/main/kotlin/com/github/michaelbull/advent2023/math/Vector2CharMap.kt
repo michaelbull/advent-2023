@@ -1,5 +1,17 @@
 package com.github.michaelbull.advent2023.math
 
+fun Sequence<String>.toVector2CharMap(): Vector2CharMap {
+    val lines = this.toList()
+    val width = lines.first().length
+    val height = lines.size
+
+    return Vector2CharMap(width, height) { (x, y) ->
+        val line = lines[y]
+        val char = line[x]
+        char
+    }
+}
+
 class Vector2CharMap(
     val width: Int,
     val height: Int,
