@@ -79,9 +79,9 @@ data class Image(
 }
 
 private fun <T> Iterable<T>.cartesianProduct(): List<Pair<T, T>> {
-    return flatMap { left ->
-        filter { right -> left != right }.map { right ->
-            left to right
+    return flatMap { a ->
+        filter { b -> a != b }.map { b ->
+            a to b
         }
     }
 }
