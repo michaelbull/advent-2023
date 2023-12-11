@@ -36,7 +36,11 @@ data class Image(
             .sumOf { (from, to) -> manhattanDistance(from, to).toLong() }
     }
 
-    fun expand(horizontalFactor: Int, verticalFactor: Int = horizontalFactor): Image {
+    fun expand(factor: Int): Image {
+        return expand(factor, factor)
+    }
+
+    fun expand(horizontalFactor: Int, verticalFactor: Int): Image {
         return expandHorizontally(horizontalFactor).expandVertically(verticalFactor)
     }
 
