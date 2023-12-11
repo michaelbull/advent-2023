@@ -1,5 +1,7 @@
 package com.github.michaelbull.advent2023.day4
 
+import kotlin.math.pow
+
 private val WHITESPACE_REGEX = "\\s+".toRegex()
 private val CARD_REGEX = "Card$WHITESPACE_REGEX(\\d+): (.*) \\| (.*)".toRegex()
 
@@ -47,8 +49,10 @@ data class Scratchcard(
     val winningCount = winningOwnedNumbers.size
 
     fun points(): Int {
-        return winningOwnedNumbers.fold(0) { points, _ ->
-            if (points == 0) 1 else points * 2
-        }
+        return 2 pow winningCount - 1
+    }
+
+    private infix fun Int.pow(exponent: Int): Int {
+        return toDouble().pow(exponent).toInt()
     }
 }
