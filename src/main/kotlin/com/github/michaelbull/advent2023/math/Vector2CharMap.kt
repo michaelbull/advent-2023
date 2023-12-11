@@ -15,7 +15,7 @@ fun Sequence<String>.toVector2CharMap(): Vector2CharMap {
 class Vector2CharMap(
     val width: Int,
     val height: Int,
-    init: (Vector2) -> Char = { DEFAULT_VALUE }
+    init: (Vector2) -> Char = { DEFAULT_VALUE },
 ) : Iterable<Pair<Vector2, Char>> {
 
     val xRange = 0..<width
@@ -55,10 +55,14 @@ class Vector2CharMap(
         return position.x in xRange && position.y in yRange
     }
 
-    fun copy(width: Int = this.width, height: Int = this.height): Vector2CharMap {
+    fun copy(
+        width: Int = this.width,
+        height: Int = this.height,
+        defaultValue: Char = DEFAULT_VALUE,
+    ): Vector2CharMap {
         return Vector2CharMap(width, height) { (x, y) ->
             if (x !in xRange || y !in yRange) {
-                DEFAULT_VALUE
+                defaultValue
             } else {
                 this[x, y]
             }

@@ -5,7 +5,7 @@ import java.util.*
 class Vector2BooleanMap(
     val width: Int,
     val height: Int,
-    init: (Vector2) -> Boolean = { DEFAULT_VALUE }
+    init: (Vector2) -> Boolean = { DEFAULT_VALUE },
 ) : Iterable<Pair<Vector2, Boolean>> {
 
     val xRange = 0..<width
@@ -26,6 +26,14 @@ class Vector2BooleanMap(
         values[indexOf(position)] = value
     }
 
+    operator fun set(x: Int, y: Int, value: Int) {
+        values[indexOf(x, y)] = value
+    }
+
+    operator fun get(x: Int, y: Int): Boolean {
+        return values[indexOf(x, y)]
+    }
+
     operator fun get(position: Vector2): Boolean {
         return values[indexOf(position)]
     }
@@ -40,6 +48,20 @@ class Vector2BooleanMap(
 
     operator fun contains(position: Vector2): Boolean {
         return position.x in xRange && position.y in yRange
+    }
+
+    fun copy(
+        width: Int = this.width,
+        height: Int = this.height,
+        defaultValue: Boolean = DEFAULT_VALUE,
+    ): Vector2BooleanMap {
+        return Vector2BooleanMap(width, height) { (x, y) ->
+            if (x !in xRange || y !in yRange) {
+                defaultValue
+            } else {
+                this[x, y]
+            }
+        }
     }
 
     fun positionsIterator() = iterator {

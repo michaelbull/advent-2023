@@ -3,7 +3,7 @@ package com.github.michaelbull.advent2023.math
 class Vector2IntMap(
     val width: Int,
     val height: Int,
-    init: (Vector2) -> Int = { DEFAULT_VALUE }
+    init: (Vector2) -> Int = { DEFAULT_VALUE },
 ) : Iterable<Pair<Vector2, Int>> {
 
     val xRange = 0..<width
@@ -31,14 +31,26 @@ class Vector2IntMap(
         return values[indexOf(position)]
     }
 
+    fun getOrNull(position: Vector2): Int? {
+        return if (position in this) {
+            values[indexOf(position)]
+        } else {
+            null
+        }
+    }
+
     operator fun contains(position: Vector2): Boolean {
         return position.x in xRange && position.y in yRange
     }
 
-    fun copy(width: Int = this.width, height: Int = this.height): Vector2IntMap {
+    fun copy(
+        width: Int = this.width,
+        height: Int = this.height,
+        defaultValue: Int = DEFAULT_VALUE,
+    ): Vector2IntMap {
         return Vector2IntMap(width, height) { (x, y) ->
             if (x !in xRange || y !in yRange) {
-                DEFAULT_VALUE
+                defaultValue
             } else {
                 this[x, y]
             }
