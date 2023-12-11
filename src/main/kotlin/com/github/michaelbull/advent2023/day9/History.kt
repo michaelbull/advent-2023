@@ -17,12 +17,12 @@ data class History(
     }
 
     private tailrec fun List<Int>.extrapolate(accumulator: Int = 0): Int {
-        val next = accumulator + last()
+        val extrapolated = accumulator + last()
 
         return if (allEqual()) {
-            next
+            extrapolated
         } else {
-            zipDifferences().extrapolate(next)
+            zipDifferences().extrapolate(extrapolated)
         }
     }
 
