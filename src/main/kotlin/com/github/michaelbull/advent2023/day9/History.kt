@@ -32,6 +32,10 @@ data class History(
     }
 
     private fun List<Int>.zipDifferences(): List<Int> {
-        return zipWithNext { a, b -> b - a }
+        return zipWithNext(::difference)
+    }
+
+    private fun difference(a: Int, b: Int): Int {
+        return b - a
     }
 }
