@@ -38,44 +38,42 @@ data class Image(
     }
 
     private fun expandHorizontally(factor: Int): Image {
-        return expand(factor, galaxiesByColumn, Vector2::x) { x ->
-            Vector2(x, 0)
-        }
+        return copy(galaxies = galaxiesByColumn.expand(factor, Vector2::x, ::horizontal))
     }
 
     private fun expandVertically(factor: Int): Image {
-        return expand(factor, galaxiesByRow, Vector2::y) { y ->
-            Vector2(0, y)
-        }
+        return copy(galaxies = galaxiesByRow.expand(factor, Vector2::y, ::vertical))
     }
 
-    private fun expand(
-        factor: Int,
-        orderedGalaxies: List<Vector2>,
-        dimension: (Vector2) -> Int,
-        expand: (Int) -> Vector2,
-    ): Image {
-        val expandedGalaxies = buildSet {
-            add(orderedGalaxies.first())
+    private fun List<Vector2>.expand(factor: Int, dimension: Dimension, axis: Axis): Set<Vector2> {
+        val first = first()
+        val pairs = zipWithNext()
+
+        return buildSet {
+            add(first)
 
             var expansion = Vector2.ZERO
             val multiplicand = factor - 1
 
-            for ((a, b) in orderedGalaxies.zipWithNext()) {
+            for ((a, b) in pairs) {
                 val delta = dimension(b) - dimension(a)
                 val emptyCount = delta - 1
 
                 if (emptyCount > 0) {
-                    expansion += expand(emptyCount * multiplicand)
+                    expansion += axis(emptyCount * multiplicand)
                 }
 
                 add(b + expansion)
             }
         }
-
-        return copy(galaxies = expandedGalaxies.toSet())
     }
+
+    private fun horizontal(x: Int) = Vector2(x, 0)
+    private fun vertical(y: Int) = Vector2(0, y)
 }
+
+private typealias Dimension = (Vector2) -> Int
+private typealias Axis = (Int) -> Vector2
 
 private fun <T> Iterable<T>.cartesianProduct(): List<Pair<T, T>> {
     return flatMap { left ->
