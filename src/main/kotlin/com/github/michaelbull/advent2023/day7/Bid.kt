@@ -2,7 +2,7 @@ package com.github.michaelbull.advent2023.day7
 
 data class Bid(
     val hand: Hand,
-    val amount: Long
+    val amount: Long,
 )
 
 fun String.toBid(): Bid {

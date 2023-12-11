@@ -2,7 +2,7 @@ package com.github.michaelbull.advent2023.day2
 
 data class CubeCount(
     val count: Int,
-    val color: CubeColor
+    val color: CubeColor,
 ) {
     override fun toString(): String {
         return "$count $color"

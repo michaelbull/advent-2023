@@ -58,7 +58,7 @@ fun Sequence<String>.toAlmanac(): Almanac {
 
 data class Almanac(
     val seeds: List<Long>,
-    val maps: List<AlmanacMap>
+    val maps: List<AlmanacMap>,
 )
 
 private fun String.toSeedList(): List<Long> {

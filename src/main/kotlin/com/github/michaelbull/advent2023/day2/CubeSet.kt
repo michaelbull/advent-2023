@@ -1,7 +1,7 @@
 package com.github.michaelbull.advent2023.day2
 
 data class CubeSet(
-    val counts: List<CubeCount>
+    val counts: List<CubeCount>,
 ) {
     fun count(color: CubeColor): Int {
         return counts

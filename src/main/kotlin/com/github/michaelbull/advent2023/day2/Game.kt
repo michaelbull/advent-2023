@@ -4,7 +4,7 @@ typealias GameConfiguration = Map<CubeColor, Int>
 
 data class Game(
     val id: Int,
-    val sets: List<CubeSet>
+    val sets: List<CubeSet>,
 ) {
 
     fun isValid(configuration: GameConfiguration): Boolean {

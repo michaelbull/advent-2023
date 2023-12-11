@@ -41,7 +41,7 @@ fun Collection<Scratchcard>.toWinningCounts(): List<Int> {
 data class Scratchcard(
     val id: Int,
     val winningNumbers: Set<Int>,
-    val ownedNumbers: Set<Int>
+    val ownedNumbers: Set<Int>,
 ) {
 
     private val winningOwnedNumbers = ownedNumbers intersect winningNumbers

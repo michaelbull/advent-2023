@@ -5,7 +5,7 @@ fun String.toHistory(): History {
 }
 
 data class History(
-    val values: List<Int>
+    val values: List<Int>,
 ) {
 
     fun nextValue(): Int {

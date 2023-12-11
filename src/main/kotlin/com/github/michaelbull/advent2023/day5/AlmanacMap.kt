@@ -15,7 +15,7 @@ fun Iterable<AlmanacMap>.lookup(ranges: List<LongRange>): List<LongRange> {
 data class AlmanacMap(
     val source: String,
     val destination: String,
-    val entries: List<AlmanacEntry>
+    val entries: List<AlmanacEntry>,
 ) {
 
     private val sortedEntries = entries.sortedBy { it.source.first }

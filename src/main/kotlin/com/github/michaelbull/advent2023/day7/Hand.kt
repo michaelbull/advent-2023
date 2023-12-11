@@ -20,7 +20,7 @@ fun String.toHandWithJokers(): Hand {
 
 data class Hand(
     val type: HandType,
-    val cards: List<Card>
+    val cards: List<Card>,
 )
 
 private fun List<Card>.handType(): HandType {

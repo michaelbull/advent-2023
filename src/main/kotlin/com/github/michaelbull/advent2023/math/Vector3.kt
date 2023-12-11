@@ -9,7 +9,7 @@ fun Triple<Int, Int, Int>.toVector3(): Vector3 {
 data class Vector3(
     val x: Int = 0,
     val y: Int = 0,
-    val z: Int = 0
+    val z: Int = 0,
 ) : Comparable<Vector3> {
 
     constructor(triple: Triple<Int, Int, Int>) : this(triple.first, triple.second, triple.third)

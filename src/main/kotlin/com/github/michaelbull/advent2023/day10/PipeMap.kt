@@ -15,7 +15,7 @@ fun Sequence<String>.toPipeMap(): PipeMap {
 
 data class PipeMap(
     val tiles: Vector2CharMap,
-    val startTile: Vector2
+    val startTile: Vector2,
 ) {
 
     fun farthestStepCount(): Int {
