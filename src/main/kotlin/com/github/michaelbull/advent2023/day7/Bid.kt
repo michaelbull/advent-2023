@@ -1,10 +1,5 @@
 package com.github.michaelbull.advent2023.day7
 
-data class Bid(
-    val hand: Hand,
-    val amount: Long,
-)
-
 fun String.toBid(): Bid {
     val (hand, amount) = split(" ")
 
@@ -14,11 +9,13 @@ fun String.toBid(): Bid {
     )
 }
 
-fun String.toJokerBid(): Bid {
-    val (hand, amount) = split(" ")
-
-    return Bid(
-        hand = hand.toHandWithJokers(),
-        amount = amount.toLong(),
-    )
+data class Bid(
+    val hand: Hand,
+    val amount: Long,
+) {
+    fun jokerRule(): Bid {
+        return copy(
+            hand = hand.jokerRule(),
+        )
+    }
 }

@@ -9,19 +9,24 @@ fun String.toHand(): Hand {
     )
 }
 
-fun String.toHandWithJokers(): Hand {
-    val cards = map(Char::toCard).map { if (it == Jack) Joker else it }
-
-    return Hand(
-        type = cards.jokerHandType(),
-        cards = cards,
-    )
-}
-
 data class Hand(
     val type: HandType,
     val cards: List<Card>,
-)
+) {
+
+    fun jokerRule(): Hand {
+        val replacedCards = cards.map(::replaceJackWithJoker)
+
+        return copy(
+            type = replacedCards.jokerHandType(),
+            cards = replacedCards,
+        )
+    }
+
+    private fun replaceJackWithJoker(card: Card): Card {
+        return if (card == Jack) Joker else card
+    }
+}
 
 private fun List<Card>.handType(): HandType {
     return when {

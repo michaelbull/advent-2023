@@ -2,10 +2,10 @@ package com.github.michaelbull.advent2023.day7
 
 import com.github.michaelbull.advent2023.Puzzle
 
-object Day7 : Puzzle<Sequence<String>, Long>(day = 7) {
+object Day7 : Puzzle<CamelCards, Long>(day = 7) {
 
-    override fun parse(lines: Sequence<String>): Sequence<String> {
-        return lines
+    override fun parse(lines: Sequence<String>): CamelCards {
+        return lines.toCamelCards()
     }
 
     override fun solutions() = listOf(
@@ -13,25 +13,11 @@ object Day7 : Puzzle<Sequence<String>, Long>(day = 7) {
         ::part2,
     )
 
-    fun part1(input: Sequence<String>): Long {
-        return input
-            .map(String::toBid)
-            .sortedWith(RankComparator)
-            .withIndex()
-            .sumOf(::winnings)
+    fun part1(input: CamelCards): Long {
+        return input.totalWinnings()
     }
 
-    fun part2(input: Sequence<String>): Long {
-        return input
-            .map(String::toJokerBid)
-            .sortedWith(RankComparator)
-            .withIndex()
-            .sumOf(::winnings)
-    }
-
-    private fun winnings(value: IndexedValue<Bid>): Long {
-        val (index, bid) = value
-        val rank = index + 1
-        return bid.amount * rank
+    fun part2(input: CamelCards): Long {
+        return input.jokerRule().totalWinnings()
     }
 }
