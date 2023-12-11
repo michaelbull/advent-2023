@@ -17,15 +17,18 @@ data class History(
     }
 
     private tailrec fun List<Int>.extrapolate(accumulator: Int = 0): Int {
-        return if (allZero()) {
-            accumulator
+        val next = accumulator + last()
+
+        return if (allEqual()) {
+            next
         } else {
-            zipDifferences().extrapolate(accumulator + last())
+            zipDifferences().extrapolate(next)
         }
     }
 
-    private fun List<Int>.allZero(): Boolean {
-        return all { it == 0 }
+    private fun <T> Iterable<T>.allEqual(): Boolean {
+        val first = first()
+        return all { it == first }
     }
 
     private fun List<Int>.zipDifferences(): List<Int> {
