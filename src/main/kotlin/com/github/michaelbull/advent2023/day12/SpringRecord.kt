@@ -76,14 +76,11 @@ data class SpringRecord(
         val firstCondition = conditions.first()
         val run = conditions.take(runLength)
 
-        return if (firstCondition == Operational || Operational in run) {
-            true
-        } else if (runExceeded) {
-            true
-        } else if (runHasRemaining) {
-            conditions[runLength] == Damaged
-        } else {
-            false
+        return when {
+            firstCondition == Operational || Operational in run -> true
+            runExceeded -> true
+            runHasRemaining && conditions[runLength] == Damaged -> true
+            else -> false
         }
     }
 
