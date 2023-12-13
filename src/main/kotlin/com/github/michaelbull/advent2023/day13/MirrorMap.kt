@@ -42,16 +42,16 @@ data class MirrorMap(
     }
 
     private fun Vector2CharMap.summarize(distinctCount: Int): Int {
-        val columnsLeft = findHorizontalReflected(distinctCount) ?: 0
-        val rowsAbove = findVerticalReflected(distinctCount) ?: 0
+        val columnsLeft = findReflectedX(distinctCount) ?: 0
+        val rowsAbove = findReflectedY(distinctCount) ?: 0
         return (rowsAbove * 100) + columnsLeft
     }
 
-    private fun Vector2CharMap.findHorizontalReflected(distinctCount: Int): Int? {
+    private fun Vector2CharMap.findReflectedX(distinctCount: Int): Int? {
         return findReflected(distinctCount, HorizontalAxis(this))
     }
 
-    private fun Vector2CharMap.findVerticalReflected(distinctCount: Int): Int? {
+    private fun Vector2CharMap.findReflectedY(distinctCount: Int): Int? {
         return findReflected(distinctCount, VerticalAxis(this))
     }
 
