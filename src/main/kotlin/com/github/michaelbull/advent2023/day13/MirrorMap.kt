@@ -40,10 +40,14 @@ data class MirrorMap(
 
     fun summarize(distinctCount: Int): Int {
         return patterns.sumOf { pattern ->
-            val columnsLeft = pattern.findReflectedColumn(distinctCount) ?: 0
-            val rowsAbove = pattern.findReflectedRow(distinctCount) ?: 0
-            (rowsAbove * 100) + columnsLeft
+            pattern.summarize(distinctCount)
         }
+    }
+
+    private fun Vector2CharMap.summarize(distinctCount: Int): Int {
+        val columnsLeft = findReflectedColumn(distinctCount) ?: 0
+        val rowsAbove = findReflectedRow(distinctCount) ?: 0
+        return (rowsAbove * 100) + columnsLeft
     }
 
     private fun Vector2CharMap.findReflectedColumn(distinctCount: Int): Int? {
