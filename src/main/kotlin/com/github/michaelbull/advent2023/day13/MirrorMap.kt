@@ -68,16 +68,9 @@ data class MirrorMap(
     }
 
     private fun Vector2CharMap.zipReflectedChars(axis: Axis, original: Int, delta: Int): List<Pair<Char, Char>> {
-        val reflected = reflect(original, delta)
-        val originalChars = axis.opposite.map { this[axis.create(reflected.first, it)] }
-        val reflectedChars = axis.opposite.mapNotNull { this.getOrNull(axis.create(reflected.second, it)) }
+        val originalChars = axis.opposite.map { this[axis(original - delta, it)] }
+        val reflectedChars = axis.opposite.mapNotNull { this.getOrNull(axis(original + delta + 1, it)) }
         return originalChars.zip(reflectedChars)
-    }
-
-    private fun reflect(original: Int, delta: Int): Pair<Int, Int> {
-        val a = original - delta
-        val b = original + delta + 1
-        return a to b
     }
 
     private fun <A, B> isDistinct(pair: Pair<A, B>): Boolean {
