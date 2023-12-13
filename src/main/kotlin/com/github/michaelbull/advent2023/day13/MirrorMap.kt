@@ -1,10 +1,7 @@
 package com.github.michaelbull.advent2023.day13
 
-import com.github.michaelbull.advent2023.math.Vector2
 import com.github.michaelbull.advent2023.math.Vector2CharMap
 import com.github.michaelbull.advent2023.math.toVector2CharMap
-
-private typealias Axis = (Int, Int) -> Vector2
 
 fun Sequence<String>.toMirrorMap(): MirrorMap {
     val patterns = mutableListOf<Vector2CharMap>()
@@ -45,27 +42,36 @@ data class MirrorMap(
     }
 
     private fun Vector2CharMap.summarize(distinctCount: Int): Int {
-        val columnsLeft = findReflectedColumn(distinctCount) ?: 0
-        val rowsAbove = findReflectedRow(distinctCount) ?: 0
+        val columnsLeft = findHorizontalReflected(distinctCount) ?: 0
+        val rowsAbove = findVerticalReflected(distinctCount) ?: 0
         return (rowsAbove * 100) + columnsLeft
     }
 
-    private fun Vector2CharMap.findReflectedColumn(distinctCount: Int): Int? {
-        return xRange.drop(1).find { x ->
-            countDistinctReflections(0..<x, yRange, ::vertical) == distinctCount
+    private fun Vector2CharMap.findHorizontalReflected(distinctCount: Int): Int? {
+        return findReflected(distinctCount, HorizontalAxis(this))
+    }
+
+    private fun Vector2CharMap.findVerticalReflected(distinctCount: Int): Int? {
+        return findReflected(distinctCount, VerticalAxis(this))
+    }
+
+    private fun Vector2CharMap.findReflected(distinctCount: Int, axis: Axis): Int? {
+        return axis.range.drop(1).find { i ->
+            countDistinctReflections(axis, 0..<i) == distinctCount
         }
     }
 
-    private fun Vector2CharMap.findReflectedRow(distinctCount: Int): Int? {
-        return yRange.drop(1).find { y ->
-            countDistinctReflections(0..<y, xRange, ::horizontal) == distinctCount
-        }
-    }
-
-    private fun Vector2CharMap.countDistinctReflections(range: IntRange, otherRange: IntRange, axis: Axis): Int {
+    private fun Vector2CharMap.countDistinctReflections(axis: Axis, range: IntRange): Int {
         return range.sumOf { delta ->
-            zipReflectedChars(delta, range, otherRange, axis).count(::isDistinct)
+            zipReflectedChars(axis, range.last, delta).count(::isDistinct)
         }
+    }
+
+    private fun Vector2CharMap.zipReflectedChars(axis: Axis, original: Int, delta: Int): List<Pair<Char, Char>> {
+        val reflected = reflect(original, delta)
+        val originalChars = axis.opposite.map { this[axis.create(reflected.first, it)] }
+        val reflectedChars = axis.opposite.mapNotNull { this.getOrNull(axis.create(reflected.second, it)) }
+        return originalChars.zip(reflectedChars)
     }
 
     private fun reflect(original: Int, delta: Int): Pair<Int, Int> {
@@ -74,22 +80,7 @@ data class MirrorMap(
         return a to b
     }
 
-    private fun Vector2CharMap.zipReflectedChars(
-        delta: Int,
-        range: IntRange,
-        otherRange: IntRange,
-        axis: Axis,
-    ): List<Pair<Char, Char>> {
-        val (original, reflected) = reflect(range.last, delta)
-        val originalChars = otherRange.map { this[axis(original, it)] }
-        val reflectedChars = otherRange.mapNotNull { this.getOrNull(axis(reflected, it)) }
-        return originalChars.zip(reflectedChars)
-    }
-
     private fun <A, B> isDistinct(pair: Pair<A, B>): Boolean {
         return pair.first != pair.second
     }
-
-    private fun vertical(x: Int, y: Int) = Vector2(x, y)
-    private fun horizontal(x: Int, y: Int) = Vector2(y, x)
 }
