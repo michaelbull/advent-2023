@@ -7,7 +7,6 @@ import kotlin.test.assertEquals
 
 class Day3Test {
 
-
     @Test
     fun `example 1`() {
         assertEquals(4361, Day3.solve(::part1, EXAMPLE))
