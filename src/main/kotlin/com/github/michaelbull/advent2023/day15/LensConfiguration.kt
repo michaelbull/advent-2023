@@ -29,8 +29,8 @@ data class LensConfiguration(
     private fun focusingPower(indexedBox: IndexedValue<Box>): Int {
         val (boxNumber, box) = indexedBox
 
-        fun focusingPower(indexesLens: IndexedValue<Int>): Int {
-            val (lensIndex, focalLength) = indexesLens
+        fun focusingPower(indexedLens: IndexedValue<Int>): Int {
+            val (lensIndex, focalLength) = indexedLens
             val lensSlot = lensIndex + 1
             return (1 + boxNumber) * lensSlot * focalLength
         }
