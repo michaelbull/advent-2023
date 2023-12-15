@@ -7,11 +7,12 @@ fun String.toLensConfiguration(): LensConfiguration {
 
     for (step in steps()) {
         val operation = step.toLensOperation()
-        val correctBox = boxes[operation.label.hash()]
+        val label = operation.label
+        val correctBox = boxes[label.hash()]
 
         when (operation) {
-            is ReplaceLens -> correctBox[operation.label] = operation.focalLength
-            is RemoveLens -> correctBox.remove(operation.label)
+            is ReplaceLens -> correctBox[label] = operation.focalLength
+            is RemoveLens -> correctBox -= label
         }
     }
 
