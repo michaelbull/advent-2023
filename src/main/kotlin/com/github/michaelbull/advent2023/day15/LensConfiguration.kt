@@ -2,10 +2,10 @@ package com.github.michaelbull.advent2023.day15
 
 private typealias Box = MutableMap<String, Int>
 
-fun String.toLensConfiguration(): LensConfiguration {
+fun Iterable<String>.toLensConfiguration(): LensConfiguration {
     val boxes = List(256) { mutableMapOf<String, Int>() }
 
-    for (step in steps()) {
+    for (step in this) {
         val operation = step.toLensOperation()
         val label = operation.label
         val correctBox = boxes[label.hash()]

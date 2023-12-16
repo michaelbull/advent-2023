@@ -2,10 +2,10 @@ package com.github.michaelbull.advent2023.day15
 
 import com.github.michaelbull.advent2023.Puzzle
 
-object Day15 : Puzzle<String, Int>(day = 15) {
+object Day15 : Puzzle<List<String>, Int>(day = 15) {
 
-    override fun parse(lines: Sequence<String>): String {
-        return lines.first()
+    override fun parse(lines: Sequence<String>): List<String> {
+        return lines.first().split(",")
     }
 
     override fun solutions() = listOf(
@@ -13,11 +13,11 @@ object Day15 : Puzzle<String, Int>(day = 15) {
         ::part2,
     )
 
-    fun part1(input: String): Int {
-        return input.steps().hash()
+    fun part1(input: List<String>): Int {
+        return input.hash()
     }
 
-    fun part2(input: String): Int {
+    fun part2(input: List<String>): Int {
         return input.toLensConfiguration().focusingPower()
     }
 }

@@ -1,9 +1,5 @@
 package com.github.michaelbull.advent2023.day15
 
-fun String.steps(): List<String> {
-    return split(",")
-}
-
 fun List<String>.hash(): Int {
     return sumOf(String::hash)
 }
