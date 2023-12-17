@@ -24,6 +24,9 @@ class Vector2CharMap(
     val xRange = 0..<width
     val yRange = 0..<height
 
+    val first = Vector2(xRange.first, yRange.first)
+    val last = Vector2(xRange.last, yRange.last)
+
     private val values = CharArray(width * height) { position ->
         val x = position % width
         val y = position / width
@@ -44,6 +47,14 @@ class Vector2CharMap(
 
     operator fun get(position: Vector2): Char {
         return values[indexOf(position)]
+    }
+
+    fun getOrNull(x: Int, y: Int): Char? {
+        return if (x in xRange && y in yRange) {
+            values[indexOf(x, y)]
+        } else {
+            null
+        }
     }
 
     fun getOrNull(position: Vector2): Char? {

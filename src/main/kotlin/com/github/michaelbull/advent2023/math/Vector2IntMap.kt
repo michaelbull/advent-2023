@@ -1,5 +1,20 @@
 package com.github.michaelbull.advent2023.math
 
+fun Sequence<String>.toVector2IntMap(): Vector2IntMap {
+    return toList().toVector2IntMap()
+}
+
+fun List<String>.toVector2IntMap(): Vector2IntMap {
+    val width = first().length
+    val height = size
+
+    return Vector2IntMap(width, height) { (x, y) ->
+        val line = this[y]
+        val char = line[x]
+        char.digitToInt()
+    }
+}
+
 class Vector2IntMap(
     val width: Int,
     val height: Int,
@@ -8,6 +23,9 @@ class Vector2IntMap(
 
     val xRange = 0..<width
     val yRange = 0..<height
+
+    val first = Vector2(xRange.first, yRange.first)
+    val last = Vector2(xRange.last, yRange.last)
 
     private val values = IntArray(width * height) { position ->
         val x = position % width
@@ -29,6 +47,14 @@ class Vector2IntMap(
 
     operator fun get(position: Vector2): Int {
         return values[indexOf(position)]
+    }
+
+    fun getOrNull(x: Int, y: Int): Int? {
+        return if (x in xRange && y in yRange) {
+            values[indexOf(x, y)]
+        } else {
+            null
+        }
     }
 
     fun getOrNull(position: Vector2): Int? {

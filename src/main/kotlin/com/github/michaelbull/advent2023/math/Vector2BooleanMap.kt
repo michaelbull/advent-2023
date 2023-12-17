@@ -1,6 +1,6 @@
 package com.github.michaelbull.advent2023.math
 
-import java.util.*
+import java.util.BitSet
 
 class Vector2BooleanMap(
     val width: Int,
@@ -10,6 +10,9 @@ class Vector2BooleanMap(
 
     val xRange = 0..<width
     val yRange = 0..<height
+
+    val first = Vector2(xRange.first, yRange.first)
+    val last = Vector2(xRange.last, yRange.last)
 
     private val values = BitSet(width * height)
 
@@ -36,6 +39,14 @@ class Vector2BooleanMap(
 
     operator fun get(position: Vector2): Boolean {
         return values[indexOf(position)]
+    }
+
+    fun getOrNull(x: Int, y: Int): Boolean? {
+        return if (x in xRange && y in yRange) {
+            values[indexOf(x, y)]
+        } else {
+            null
+        }
     }
 
     fun getOrNull(position: Vector2): Boolean? {
