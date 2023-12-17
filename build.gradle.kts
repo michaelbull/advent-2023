@@ -19,3 +19,11 @@ dependencies {
 application {
     mainClass.set("com.github.michaelbull.advent2023.MainKt")
 }
+
+tasks.test {
+    jvmArgs = listOf("-Xss2m")
+}
+
+tasks.withType(JavaExec::class.java) {
+    jvmArgs = listOf("-Xss2m")
+}
