@@ -13,7 +13,6 @@ object Day17 : Puzzle<CityMap, Int>(day = 17) {
         ::part2,
     )
 
-
     fun part1(input: CityMap): Int {
         return input.minHeatLoss(1..3)
     }
