@@ -16,17 +16,11 @@ data class Vector2Range(
     val isDiagonal: Boolean
         get() = abs(xDelta) == abs(yDelta)
 
-    val xRange: IntRange
-        get() = start.x..endInclusive.x
+    val xRange = start.x..endInclusive.x
+    val yRange = start.y..endInclusive.y
 
-    val yRange: IntRange
-        get() = start.y..endInclusive.y
-
-    val xDelta: Int
-        get() = endInclusive.x - start.x
-
-    val yDelta: Int
-        get() = endInclusive.y - start.y
+    val xDelta = endInclusive.x - start.x
+    val yDelta = endInclusive.y - start.y
 
     override fun iterator(): Iterator<Vector2> {
         return Vector2Iterator()

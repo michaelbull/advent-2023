@@ -5,23 +5,13 @@ data class Vector3Range(
     override val endInclusive: Vector3,
 ) : Iterable<Vector3>, ClosedRange<Vector3> {
 
-    val xRange: IntRange
-        get() = start.x..endInclusive.x
+    val xRange = start.x..endInclusive.x
+    val yRange = start.y..endInclusive.y
+    val zRange = start.z..endInclusive.z
 
-    val yRange: IntRange
-        get() = start.y..endInclusive.y
-
-    val zRange: IntRange
-        get() = start.z..endInclusive.z
-
-    val xDelta: Int
-        get() = endInclusive.x - start.x
-
-    val yDelta: Int
-        get() = endInclusive.y - start.y
-
-    val zDelta: Int
-        get() = endInclusive.z - start.z
+    val xDelta = endInclusive.x - start.x
+    val yDelta = endInclusive.y - start.y
+    val zDelta = endInclusive.z - start.z
 
     fun coerceIn(range: Vector3Range): Vector3Range {
         val coercedStart = start.coerceAtLeast(range.start)
