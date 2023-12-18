@@ -101,12 +101,16 @@ data class Vector2(
         )
     }
 
-    infix fun cross(other: Vector2): Int {
-        return (this.x * other.y) - (this.y * other.x)
+    infix fun cross(other: Vector2): Long {
+        val a = this.x.toLong() * other.y.toLong()
+        val b = this.y.toLong() * other.x.toLong()
+        return a - b
     }
 
-    infix fun dot(other: Vector2): Int {
-        return (this.x * other.x) + (this.y * other.y)
+    infix fun dot(other: Vector2): Long {
+        val a = this.x.toLong() * other.x.toLong()
+        val b = this.y.toLong() * other.y.toLong()
+        return a + b
     }
 
     fun abs(): Vector2 {

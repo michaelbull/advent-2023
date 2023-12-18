@@ -122,8 +122,11 @@ data class Vector3(
         )
     }
 
-    infix fun dot(other: Vector3): Int {
-        return (this.x * other.x) + (this.y * other.y) + (this.z * other.z)
+    infix fun dot(other: Vector3): Long {
+        val a = this.x.toLong() * other.x.toLong()
+        val b = this.y.toLong() * other.y.toLong()
+        val c = this.z.toLong() * other.z.toLong()
+        return a + b + c
     }
 
     fun abs(): Vector3 {
