@@ -10,12 +10,15 @@ import kotlin.math.sqrt
  * between [positions][Vector2] [p] and [q] in the [x][Vector2.x] and [y][Vector2.y] dimensions.
  */
 fun euclideanDistance(p: Vector2, q: Vector2): Int {
-    val deltaX = (q.x - p.x).toDouble()
-    val deltaY = (q.y - p.y).toDouble()
-    return sqrt(deltaX.pow(2) + deltaY.pow(2)).toInt()
+    val delta = q - p
+    return delta.euclideanDistance()
 }
 
-fun Vector2.euclideanDistanceTo(other: Vector2): Int {
+fun Vector2.euclideanDistance(): Int {
+    return sqrt(x.toDouble().pow(2) + y.toDouble().pow(2)).toInt()
+}
+
+infix fun Vector2.euclideanDistanceTo(other: Vector2): Int {
     return euclideanDistance(this, other)
 }
 
@@ -24,12 +27,15 @@ fun Vector2.euclideanDistanceTo(other: Vector2): Int {
  * between [positions][Vector2] [p] and [q] in the [x][Vector2.x] and [y][Vector2.y] dimensions.
  */
 fun chebyshevDistance(p: Vector2, q: Vector2): Int {
-    val deltaX = q.x - p.x
-    val deltaY = q.y - p.y
-    return max(abs(deltaX), abs(deltaY))
+    val delta = q - p
+    return delta.chebyshevDistance()
 }
 
-fun Vector2.chebyshevDistanceTo(other: Vector2): Int {
+fun Vector2.chebyshevDistance(): Int {
+    return max(abs(x), abs(y))
+}
+
+infix fun Vector2.chebyshevDistanceTo(other: Vector2): Int {
     return chebyshevDistance(this, other)
 }
 
@@ -38,11 +44,14 @@ fun Vector2.chebyshevDistanceTo(other: Vector2): Int {
  * between [positions][Vector2] [p] and [q] in the [x][Vector2.x] and [y][Vector2.y] dimensions.
  */
 fun manhattanDistance(p: Vector2, q: Vector2): Int {
-    val deltaX = p.x - q.x
-    val deltaY = p.y - q.y
-    return abs(deltaX) + abs(deltaY)
+    val delta = q - p
+    return delta.manhattanDistance()
 }
 
-fun Vector2.manhattanDistanceTo(other: Vector2): Int {
+fun Vector2.manhattanDistance(): Int {
+    return abs(x) + abs(y)
+}
+
+infix fun Vector2.manhattanDistanceTo(other: Vector2): Int {
     return manhattanDistance(this, other)
 }

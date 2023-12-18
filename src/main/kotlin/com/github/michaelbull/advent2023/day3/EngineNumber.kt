@@ -1,6 +1,7 @@
 package com.github.michaelbull.advent2023.day3
 
 import com.github.michaelbull.advent2023.math.Vector2
+import com.github.michaelbull.advent2023.math.chebyshevDistanceTo
 
 fun Int.inEngineAt(position: Vector2): EngineNumber {
     return EngineNumber(position, this)
@@ -21,5 +22,9 @@ data class EngineNumber(
         return positions.any { position ->
             position adjacentTo other
         }
+    }
+
+    private infix fun Vector2.adjacentTo(other: Vector2): Boolean {
+        return chebyshevDistanceTo(other) <= 1
     }
 }
