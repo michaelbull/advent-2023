@@ -82,40 +82,44 @@ data class Contraption(
             leftwardBeams()
     }
 
-    private fun upwardBeams(): List<Beam> {
+    private fun topRow(): List<Vector2> {
         return layout.xRange.map { x ->
-            Beam(
-                position = Vector2(x, layout.yRange.last + 1),
-                direction = Up,
-            )
+            Vector2(x, layout.yRange.first - 1)
         }
+    }
+
+    private fun rightColumn(): List<Vector2> {
+        return layout.yRange.map { y ->
+            Vector2(layout.xRange.last + 1, y)
+        }
+    }
+
+    private fun bottomRow(): List<Vector2> {
+        return layout.xRange.map { x ->
+            Vector2(x, layout.yRange.last + 1)
+        }
+    }
+
+    private fun leftColumn(): List<Vector2> {
+        return layout.yRange.map { y ->
+            Vector2(layout.xRange.first - 1, y)
+        }
+    }
+
+    private fun upwardBeams(): List<Beam> {
+        return bottomRow().map { Beam(it, Up) }
     }
 
     private fun rightwardBeams(): List<Beam> {
-        return layout.yRange.map { y ->
-            Beam(
-                position = Vector2(layout.xRange.first - 1, y),
-                direction = Right,
-            )
-        }
+        return leftColumn().map { Beam(it, Right) }
     }
 
     private fun downwardBeams(): List<Beam> {
-        return layout.xRange.map { x ->
-            Beam(
-                position = Vector2(x, layout.yRange.first - 1),
-                direction = Down,
-            )
-        }
+        return topRow().map { Beam(it, Down) }
     }
 
     private fun leftwardBeams(): List<Beam> {
-        return layout.yRange.map { y ->
-            Beam(
-                position = Vector2(layout.xRange.last + 1, y),
-                direction = Left,
-            )
-        }
+        return rightColumn().map { Beam(it, Left) }
     }
 
     private companion object {
