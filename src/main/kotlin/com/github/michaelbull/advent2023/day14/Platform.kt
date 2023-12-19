@@ -12,6 +12,9 @@ data class Platform(
     val map: Vector2CharMap,
 ) {
 
+    private val horizontalAxis = HorizontalAxis(map)
+    private val verticalAxis = VerticalAxis(map)
+
     fun tiltNorth() = tiltY(+1)
     fun tiltEast() = tiltX(-1)
     fun tiltSouth() = tiltY(-1)
@@ -86,11 +89,11 @@ data class Platform(
     }
 
     private fun tiltX(x: Int): Platform {
-        return tilt(x, HorizontalAxis(map))
+        return tilt(x, horizontalAxis)
     }
 
     private fun tiltY(y: Int): Platform {
-        return tilt(y, VerticalAxis(map))
+        return tilt(y, verticalAxis)
     }
 }
 
