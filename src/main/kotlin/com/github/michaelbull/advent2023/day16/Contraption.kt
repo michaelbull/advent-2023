@@ -57,43 +57,17 @@ data class Contraption(
                 }
 
                 VERTICAL_SPLITTER -> when (direction) {
-                    Up -> {
-                        forward()
-                    }
-
-                    Right -> {
-                        up()
-                        down()
-                    }
-
-                    Down -> {
-                        forward()
-                    }
-
-                    Left -> {
-                        up()
-                        down()
-                    }
+                    Up -> forward()
+                    Right -> up().also { down() }
+                    Down -> forward()
+                    Left -> up().also { down() }
                 }
 
                 HORIZONTAL_SPLITTER -> when (direction) {
-                    Up -> {
-                        left()
-                        right()
-                    }
-
-                    Right -> {
-                        forward()
-                    }
-
-                    Down -> {
-                        left()
-                        right()
-                    }
-
-                    Left -> {
-                        forward()
-                    }
+                    Up -> left().also { right() }
+                    Right -> forward()
+                    Down -> left().also { right() }
+                    Left -> forward()
                 }
 
                 else -> error("unknown tile '$tile'")
