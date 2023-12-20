@@ -12,8 +12,24 @@ tailrec fun greatestCommonDivisor(a: Long, b: Long): Long {
     }
 }
 
+fun Iterable<Long>.greatestCommonDivisor(): Long {
+    return reduce(::greatestCommonDivisor)
+}
+
+fun Sequence<Long>.greatestCommonDivisor(): Long {
+    return reduce(::greatestCommonDivisor)
+}
+
 fun leastCommonMultiple(a: Long, b: Long): Long {
     return abs(a * b) / greatestCommonDivisor(a, b)
+}
+
+fun Iterable<Long>.leastCommonMultiple(): Long {
+    return reduce(::leastCommonMultiple)
+}
+
+fun Sequence<Long>.leastCommonMultiple(): Long {
+    return reduce(::leastCommonMultiple)
 }
 
 /* https://en.wikipedia.org/wiki/Triangular_number */

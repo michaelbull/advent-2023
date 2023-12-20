@@ -44,7 +44,7 @@ data class DesertMap(
         return network.keys
             .filter(isStart)
             .map { start -> stepCount(start, isEnd) }
-            .reduce(::leastCommonMultiple)
+            .leastCommonMultiple()
     }
 
     private fun stepCount(start: Node, isEnd: (Node) -> Boolean): Long {
