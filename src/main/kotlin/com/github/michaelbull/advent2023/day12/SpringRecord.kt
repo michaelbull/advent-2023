@@ -100,7 +100,7 @@ data class SpringRecord(
             1 -> this
             else -> when (size) {
                 0 -> emptyList()
-                1 -> this
+                1 -> this[0].let { element -> List(n) { element } }
                 else -> List(size * n) { this[it % size] }
             }
         }
