@@ -50,20 +50,17 @@ data class CityMap(
         var potentialCityBlock = cityBlock
 
         for (step in 1..steps.last) {
-            potentialCityBlock += delta
+            potentialCityBlock += direction
             potentialHeatLoss += map.getOrNull(potentialCityBlock) ?: break
 
             if (step >= steps.first) {
-                val movements = setOf(
-                    turnLeft(potentialCityBlock),
-                    turnRight(potentialCityBlock),
-                )
-
-                val potentialMovements = movements.map { movement ->
+                val movements = ROTATIONS.map { rotate ->
+                    val rotatedDirection = rotate(direction)
+                    val movement = potentialCityBlock movingIn rotatedDirection
                     PotentialMovement(movement, potentialHeatLoss)
                 }
 
-                yieldAll(potentialMovements)
+                yieldAll(movements)
             }
         }
     }
@@ -72,7 +69,33 @@ data class CityMap(
         private val LAVA_POOL = Vector2.ZERO
         private val SOUTH = Vector2(+0, +1)
         private val EAST = Vector2(+1, +0)
-        private val INITIAL_DIRECTIONS = setOf(SOUTH, EAST)
-        private val INITIAL_MOVEMENTS = INITIAL_DIRECTIONS.map { Movement(LAVA_POOL, it) }
+
+        private val INITIAL_DIRECTIONS = setOf(
+            SOUTH,
+            EAST,
+        )
+
+        private val INITIAL_MOVEMENTS = INITIAL_DIRECTIONS.map { direction ->
+            LAVA_POOL movingIn direction
+        }
+
+        private val ROTATIONS = setOf(
+            Vector2::rotateLeft,
+            Vector2::rotateRight,
+        )
     }
+}
+
+private fun Vector2.rotateLeft(): Vector2 {
+    return copy(
+        x = y,
+        y = -x
+    )
+}
+
+private fun Vector2.rotateRight(): Vector2 {
+    return copy(
+        x = -y,
+        y = x
+    )
 }
