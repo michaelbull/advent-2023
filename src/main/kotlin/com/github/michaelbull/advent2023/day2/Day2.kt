@@ -9,8 +9,8 @@ object Day2 : Puzzle<Sequence<Game>, Int>(day = 2) {
     }
 
     override fun solutions() = listOf(
-        Day2::part1,
-        Day2::part2,
+        ::part1,
+        ::part2,
     )
 
     fun part1(input: Sequence<Game>): Int {
