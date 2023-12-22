@@ -66,42 +66,28 @@ data class Vector3Range(
     }
 
     private inner class Vector3Iterator : Iterator<Vector3> {
-
-        private var current: Vector3? = null
+        private var finalElement = endInclusive
+        private var hasNext = isNotEmpty()
+        private var next = if (hasNext) start else finalElement
 
         override fun hasNext(): Boolean {
-            val current = current
-
-            return when {
-                current == null -> {
-                    when {
-                        start.x < endInclusive.x && start.y <= endInclusive.y && start.z <= endInclusive.z -> true
-                        start.x <= endInclusive.x && start.y < endInclusive.y && start.z <= endInclusive.z -> true
-                        start.x <= endInclusive.x && start.y <= endInclusive.y && start.z < endInclusive.z -> true
-                        else -> false
-                    }
-                }
-
-                current.x < endInclusive.x && current.y <= endInclusive.y && current.z <= endInclusive.z -> true
-                current.x == endInclusive.x && current.y < endInclusive.y && current.z <= endInclusive.z -> true
-                current.x == endInclusive.x && current.y == endInclusive.y && current.z < endInclusive.z -> true
-                else -> false
-            }
+            return hasNext
         }
 
         override fun next(): Vector3 {
-            var next = current
+            val value = next
 
-            next = when {
-                next != null -> next.step()
-                start.x < endInclusive.x && start.y <= endInclusive.y && start.z <= endInclusive.z -> start
-                start.x <= endInclusive.x && start.y < endInclusive.y && start.z <= endInclusive.z -> start
-                start.x <= endInclusive.x && start.y <= endInclusive.y && start.z < endInclusive.z -> start
-                else -> throw NoSuchElementException()
+            if (value == finalElement) {
+                if (hasNext) {
+                    hasNext = false
+                } else {
+                    throw NoSuchElementException()
+                }
+            } else {
+                next = next.step()
             }
 
-            current = next
-            return next
+            return value
         }
 
         private fun Vector3.step(): Vector3 {
@@ -120,6 +106,8 @@ data class Vector3Range(
                     y = start.y,
                     z = z + 1,
                 )
+
+                x == endInclusive.x && y == endInclusive.y && z == endInclusive.z -> endInclusive
 
                 else -> throw NoSuchElementException()
             }

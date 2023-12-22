@@ -75,39 +75,28 @@ data class Vector2Range(
     }
 
     private inner class Vector2Iterator : Iterator<Vector2> {
-
-        private var current: Vector2? = null
+        private var finalElement = endInclusive
+        private var hasNext = isNotEmpty()
+        private var next = if (hasNext) start else finalElement
 
         override fun hasNext(): Boolean {
-            val current = current
-
-            return when {
-                current == null -> {
-                    when {
-                        start.x < endInclusive.x && start.y <= endInclusive.y -> true
-                        start.x <= endInclusive.y && start.y < endInclusive.y -> true
-                        else -> false
-                    }
-                }
-
-                current.x < endInclusive.x && current.y <= endInclusive.y -> true
-                current.x == endInclusive.x && current.y < endInclusive.y -> true
-                else -> false
-            }
+            return hasNext
         }
 
         override fun next(): Vector2 {
-            var next = current
+            val value = next
 
-            next = when {
-                next != null -> next.step()
-                start.x < endInclusive.x && start.y <= endInclusive.y -> start
-                start.x <= endInclusive.x && start.y < endInclusive.y -> start
-                else -> throw NoSuchElementException()
+            if (value == finalElement) {
+                if (hasNext) {
+                    hasNext = false
+                } else {
+                    throw NoSuchElementException()
+                }
+            } else {
+                next = next.step()
             }
 
-            current = next
-            return next
+            return value
         }
 
         private fun Vector2.step(): Vector2 {
@@ -120,6 +109,8 @@ data class Vector2Range(
                     x = start.x,
                     y = y + 1,
                 )
+
+                x == endInclusive.x && y == endInclusive.y -> endInclusive
 
                 else -> throw NoSuchElementException()
             }
