@@ -85,8 +85,8 @@ data class HikingTrailMap(
         }
 
         for ((junctionPosition, junctionPaths) in pathsByJunctionPosition) {
-            val current = mutableSetOf(junctionPosition)
             val visited = mutableSetOf(junctionPosition)
+            var current = mutableSetOf(junctionPosition)
             var steps = 1
 
             while (current.isNotEmpty()) {
@@ -106,8 +106,7 @@ data class HikingTrailMap(
                     }
                 }
 
-                current.clear()
-                current += next
+                current = next
                 steps++
             }
         }
