@@ -62,61 +62,73 @@ class Vector3RangeTest {
 
     @Test
     fun `isEmpty on empty x axis`() {
-        assertTrue((Vector3(1, 0, 0)..Vector3(0, 0, 0)).isEmpty())
+        val range = Vector3(1, 0, 0)..Vector3(0, 0, 0)
+        assertFalse(range.isEmpty())
     }
 
     @Test
     fun `isEmpty on empty y axis`() {
-        assertTrue((Vector3(0, 1, 0)..Vector3(0, 0, 0)).isEmpty())
+        val range = Vector3(0, 1, 0)..Vector3(0, 0, 0)
+        assertFalse(range.isEmpty())
     }
 
     @Test
     fun `isEmpty on empty z axis`() {
-        assertTrue((Vector3(0, 0, 1)..Vector3(0, 0, 0)).isEmpty())
+        val range = Vector3(0, 0, 1)..Vector3(0, 0, 0)
+        assertFalse(range.isEmpty())
     }
 
     @Test
     fun `isEmpty on empty x y and z axis`() {
-        assertTrue((Vector3(1, 1, 1)..Vector3(0, 0, 0)).isEmpty())
+        val range = Vector3(1, 1, 1)..Vector3(0, 0, 0)
+        assertTrue(range.isEmpty())
     }
 
     @Test
     fun `isEmpty on single-length x, y and z axis`() {
-        assertFalse((Vector3(0, 0, 0)..Vector3(0, 0, 0)).isEmpty())
+        val range = Vector3(0, 0, 0)..Vector3(0, 0, 0)
+        assertFalse(range.isEmpty())
     }
 
     @Test
     fun `isEmpty on multi-length x axis`() {
-        assertFalse((Vector3(0, 0, 0)..Vector3(5, 0, 0)).isEmpty())
+        val range = Vector3(0, 0, 0)..Vector3(5, 0, 0)
+        assertFalse(range.isEmpty())
     }
 
     @Test
     fun `isEmpty on multi-length y axis`() {
-        assertFalse((Vector3(0, 0, 0)..Vector3(0, 5, 0)).isEmpty())
+        val range = Vector3(0, 0, 0)..Vector3(0, 5, 0)
+        assertFalse(range.isEmpty())
     }
 
     @Test
     fun `isEmpty on multi-length z axis`() {
-        assertFalse((Vector3(0, 0, 0)..Vector3(0, 0, 5)).isEmpty())
+        val range = Vector3(0, 0, 0)..Vector3(0, 0, 5)
+        assertFalse(range.isEmpty())
     }
 
     @Test
     fun `isEmpty on multi-length x and y axis`() {
-        assertFalse((Vector3(0, 0, 0)..Vector3(5, 5, 0)).isEmpty())
+        val range = Vector3(0, 0, 0)..Vector3(5, 5, 0)
+        assertFalse(range.isEmpty())
     }
 
     @Test
     fun `isEmpty on multi-length x and z axis`() {
-        assertFalse((Vector3(0, 0, 0)..Vector3(5, 0, 5)).isEmpty())
+        val range = Vector3(0, 0, 0)..Vector3(5, 0, 5)
+        assertFalse(range.isEmpty())
     }
 
     @Test
     fun `isEmpty on multi-length y and z axis`() {
-        assertFalse((Vector3(0, 0, 0)..Vector3(0, 5, 5)).isEmpty())
+        val range = Vector3(0, 0, 0)..Vector3(0, 5, 5)
+        assertFalse(range.isEmpty())
     }
 
     @Test
     fun `isEmpty on multi-length x, y, and z axis`() {
-        assertFalse((Vector3(0, 0, 0)..Vector3(5, 5, 5)).isEmpty())
+        val range = Vector3(0, 0, 0)..Vector3(5, 5, 5)
+        assertFalse(range.isEmpty())
     }
 }

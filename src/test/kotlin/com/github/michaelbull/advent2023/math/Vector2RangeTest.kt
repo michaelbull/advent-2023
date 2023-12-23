@@ -50,36 +50,43 @@ class Vector2RangeTest {
 
     @Test
     fun `isEmpty on empty x axis`() {
-        assertTrue((Vector2(1, 0)..Vector2(0, 0)).isEmpty())
+        val range = Vector2(1, 0)..Vector2(0, 0)
+        assertFalse(range.isEmpty())
     }
 
     @Test
     fun `isEmpty on empty y axis`() {
-        assertTrue((Vector2(0, 1)..Vector2(0, 0)).isEmpty())
+        val range = Vector2(0, 1)..Vector2(0, 0)
+        assertFalse(range.isEmpty())
     }
 
     @Test
     fun `isEmpty on empty x and y axis`() {
-        assertTrue((Vector2(1, 1)..Vector2(0, 0)).isEmpty())
+        val range = Vector2(1, 1)..Vector2(0, 0)
+        assertTrue(range.isEmpty())
     }
 
     @Test
     fun `isEmpty on single-length x axis`() {
-        assertFalse((Vector2(0, 0)..Vector2(5, 0)).isEmpty())
+        val range = Vector2(0, 0)..Vector2(5, 0)
+        assertFalse(range.isEmpty())
     }
 
     @Test
     fun `isEmpty on single-length y axis`() {
-        assertFalse((Vector2(0, 0)..Vector2(0, 5)).isEmpty())
+        val range = Vector2(0, 0)..Vector2(0, 5)
+        assertFalse(range.isEmpty())
     }
 
     @Test
     fun `isEmpty on single-length x and y axis`() {
-        assertFalse((Vector2(0, 0)..Vector2(0, 0)).isEmpty())
+        val range = Vector2(0, 0)..Vector2(0, 0)
+        assertFalse(range.isEmpty())
     }
 
     @Test
     fun `isEmpty on multi-length x and y axis`() {
-        assertFalse((Vector2(0, 0)..Vector2(5, 5)).isEmpty())
+        val range = Vector2(0, 0)..Vector2(5, 5)
+        assertFalse(range.isEmpty())
     }
 }

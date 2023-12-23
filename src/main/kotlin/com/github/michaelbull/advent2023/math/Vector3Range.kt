@@ -1,45 +1,26 @@
 package com.github.michaelbull.advent2023.math
 
-data class Vector3Range(
-    override val start: Vector3,
-    override val endInclusive: Vector3,
-) : Iterable<Vector3>, ClosedRange<Vector3> {
+class Vector3Range(
+    start: Vector3,
+    endInclusive: Vector3,
+) : Vector3Progression(start, endInclusive, Vector3.UP), ClosedRange<Vector3> {
 
-    val xRange = start.x..endInclusive.x
-    val yRange = start.y..endInclusive.y
-    val zRange = start.z..endInclusive.z
-
-    val xDelta = endInclusive.x - start.x
-    val yDelta = endInclusive.y - start.y
-    val zDelta = endInclusive.z - start.z
-
-    fun coerceIn(range: Vector3Range): Vector3Range {
-        val coercedStart = start.coerceAtLeast(range.start)
-        val coercedEndInclusive = endInclusive.coerceAtMost(range.endInclusive)
-        return coercedStart..coercedEndInclusive
-    }
-
-    override fun iterator(): Iterator<Vector3> {
-        return Vector3Iterator()
-    }
+    override val start: Vector3 get() = first
+    override val endInclusive: Vector3 get() = last
 
     override fun contains(value: Vector3): Boolean {
-        return value.x in xRange && value.y in yRange && value.z in zRange
+        return value.x in xProgression && value.y in yProgression && value.z in zProgression
     }
 
     override fun isEmpty(): Boolean {
-        return start.x > endInclusive.x || start.y > endInclusive.y || start.z > endInclusive.z
-    }
-
-    fun isNotEmpty(): Boolean {
-        return !isEmpty()
+        return super<Vector3Progression>.isEmpty()
     }
 
     override fun equals(other: Any?): Boolean {
         return if (other is Vector3Range) {
             if (isEmpty() && other.isEmpty()) {
                 true
-            } else if (start == other.start && endInclusive == other.endInclusive) {
+            } else if (first == other.first && last == other.last) {
                 true
             } else {
                 false
@@ -53,64 +34,15 @@ data class Vector3Range(
         return if (isEmpty()) {
             -1
         } else {
-            (31 * start.hashCode()) + endInclusive.hashCode()
+            (31 * first.hashCode()) + last.hashCode()
         }
     }
 
     override fun toString(): String {
-        return "$start..$endInclusive"
+        return "$first..$last"
     }
 
     companion object {
-        val EMPTY = Vector3Range(Vector3(1, 1, 1), Vector3.ZERO)
-    }
-
-    private inner class Vector3Iterator : Iterator<Vector3> {
-        private var finalElement = endInclusive
-        private var hasNext = isNotEmpty()
-        private var next = if (hasNext) start else finalElement
-
-        override fun hasNext(): Boolean {
-            return hasNext
-        }
-
-        override fun next(): Vector3 {
-            val value = next
-
-            if (value == finalElement) {
-                if (hasNext) {
-                    hasNext = false
-                } else {
-                    throw NoSuchElementException()
-                }
-            } else {
-                next = next.step()
-            }
-
-            return value
-        }
-
-        private fun Vector3.step(): Vector3 {
-            return when {
-                x < endInclusive.x && y <= endInclusive.y && z <= endInclusive.z -> copy(
-                    x = x + 1,
-                )
-
-                x == endInclusive.x && y < endInclusive.y && z <= endInclusive.z -> copy(
-                    x = start.x,
-                    y = y + 1,
-                )
-
-                x == endInclusive.x && y == endInclusive.y && z < endInclusive.z -> copy(
-                    x = start.x,
-                    y = start.y,
-                    z = z + 1,
-                )
-
-                x == endInclusive.x && y == endInclusive.y && z == endInclusive.z -> endInclusive
-
-                else -> throw NoSuchElementException()
-            }
-        }
+        val EMPTY = Vector3Range(Vector3.UP, Vector3.ZERO)
     }
 }

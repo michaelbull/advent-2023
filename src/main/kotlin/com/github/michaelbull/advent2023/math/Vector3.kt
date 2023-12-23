@@ -108,9 +108,9 @@ data class Vector3(
 
     operator fun rem(range: Vector3Range): Vector3 {
         return copy(
-            x = this.x % range.xRange,
-            y = this.y % range.yRange,
-            z = this.z % range.zRange,
+            x = this.x % range.xProgression,
+            y = this.y % range.yProgression,
+            z = this.z % range.zProgression,
         )
     }
 
@@ -175,5 +175,7 @@ data class Vector3(
 
     companion object {
         val ZERO = Vector3(0, 0, 0)
+        val UP = Vector3(+1, +1, +1)
+        val DOWN = Vector3(-1, -1, -1)
     }
 }

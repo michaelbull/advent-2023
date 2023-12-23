@@ -96,8 +96,8 @@ data class Vector2(
 
     operator fun rem(range: Vector2Range): Vector2 {
         return copy(
-            x = this.x % range.xRange,
-            y = this.y % range.yRange,
+            x = this.x % range.xProgression,
+            y = this.y % range.yProgression,
         )
     }
 
@@ -154,15 +154,17 @@ data class Vector2(
 
     companion object {
         val ZERO = Vector2(0, 0)
+        val UP = Vector2(+1, +1)
+        val DOWN = Vector2(-1, -1)
 
-        val NORTH = Vector2(0, 1)
-        val NORTH_EAST = Vector2(1, 1)
-        val EAST = Vector2(1, 0)
-        val SOUTH_EAST = Vector2(1, -1)
+        val NORTH = Vector2(0, +1)
+        val NORTH_EAST = Vector2(+1, +1)
+        val EAST = Vector2(+1, 0)
+        val SOUTH_EAST = Vector2(+1, -1)
         val SOUTH = Vector2(0, -1)
         val SOUTH_WEST = Vector2(-1, -1)
         val WEST = Vector2(-1, 0)
-        val NORTH_WEST = Vector2(-1, 1)
+        val NORTH_WEST = Vector2(-1, +1)
 
         val CARDINAL_DIRECTIONS = setOf(
             NORTH,
