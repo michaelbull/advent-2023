@@ -1,5 +1,6 @@
 package com.github.michaelbull.advent2023.day11
 
+import com.github.michaelbull.advent2023.iteration.combinationPairs
 import com.github.michaelbull.advent2023.math.Vector2
 import com.github.michaelbull.advent2023.math.manhattanDistance
 
@@ -30,9 +31,8 @@ data class Image(
     private val verticalGalaxies = galaxies.sortedBy(::vertical)
 
     fun sumShortestPathLengths(): Long {
-        return galaxies
-            .cartesianProduct()
-            .distinctBySet()
+        return galaxies.toList()
+            .combinationPairs()
             .sumOf { (from, to) -> manhattanDistance(from, to).toLong() }
     }
 
@@ -80,20 +80,4 @@ data class Image(
 
     private fun vertical(vector: Vector2) = vector.y
     private fun vertical(y: Int) = Vector2(0, y)
-}
-
-private fun <T> Iterable<T>.cartesianProduct(): List<Pair<T, T>> {
-    return flatMap { a ->
-        filter { b -> a != b }.map { b ->
-            a to b
-        }
-    }
-}
-
-private fun <A, B> List<Pair<A, B>>.distinctBySet(): List<Pair<A, B>> {
-    return distinctBy(Pair<A, B>::toSet)
-}
-
-private fun <T> Pair<T, T>.toSet(): Set<T> {
-    return setOf(first, second)
 }
