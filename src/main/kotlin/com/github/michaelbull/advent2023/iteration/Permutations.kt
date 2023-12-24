@@ -102,8 +102,8 @@ private fun <T> List<T>.permutationTriple(indices: IntArray, count: Int): Triple
     )
 }
 
-fun IntArray.swapByIndex(indexA: Int, indexB: Int) {
-    this[indexA] = this[indexB].also {
-        this[indexB] = this[indexA]
+fun IntArray.swapByIndex(a: Int, b: Int) {
+    this[a] = this[b].also {
+        this[b] = this[a]
     }
 }

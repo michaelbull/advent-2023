@@ -16,6 +16,7 @@ import com.github.michaelbull.advent2023.day20.Day20
 import com.github.michaelbull.advent2023.day21.Day21
 import com.github.michaelbull.advent2023.day22.Day22
 import com.github.michaelbull.advent2023.day23.Day23
+import com.github.michaelbull.advent2023.day24.Day24
 import com.github.michaelbull.advent2023.day3.Day3
 import com.github.michaelbull.advent2023.day4.Day4
 import com.github.michaelbull.advent2023.day5.Day5
@@ -50,6 +51,7 @@ fun main() {
         Day21,
         Day22,
         Day23,
+        Day24,
     )
 
     for (puzzle in puzzles) {
