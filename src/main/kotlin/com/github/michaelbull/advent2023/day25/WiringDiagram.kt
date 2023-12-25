@@ -29,7 +29,7 @@ data class WiringDiagram(
         return vertices to minCut
     }
 
-    private fun toGraph() = graph(::DefaultWeightedEdge) {
+    private fun toGraph() = graph {
         vertices.forEach(::addVertex)
         edges.forEach(::addEdge)
     }
@@ -39,9 +39,6 @@ private fun <V, E> Graph<V, E>.addEdge(vertices: Pair<V, V>): E {
     return addEdge(vertices.first, vertices.second)
 }
 
-private inline fun <V, E> graph(
-    noinline edgeSupplier: () -> E,
-    block: Graph<V, E>.() -> Unit,
-): SimpleWeightedGraph<V, E> {
-    return SimpleWeightedGraph<V, E>(null, edgeSupplier).apply(block)
+private inline fun <V> graph(builder: Graph<V, DefaultWeightedEdge>.() -> Unit): Graph<V, DefaultWeightedEdge> {
+    return SimpleWeightedGraph<V, DefaultWeightedEdge>(null, ::DefaultWeightedEdge).apply(builder)
 }
