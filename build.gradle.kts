@@ -13,6 +13,7 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+    implementation("org.jgrapht:jgrapht-core:1.5.2")
     testImplementation(kotlin("test"))
 }
 
