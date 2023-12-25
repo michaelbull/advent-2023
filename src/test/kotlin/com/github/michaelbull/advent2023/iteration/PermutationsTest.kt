@@ -2,6 +2,7 @@ package com.github.michaelbull.advent2023.iteration
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class PermutationsTest {
 
@@ -75,5 +76,17 @@ class PermutationsTest {
         )
 
         assertEquals(expected, actual)
+    }
+
+    @Test
+    fun `empty permutations`() {
+        val actual = emptyList<Nothing>().permutations().toList()
+        assertTrue(actual.isEmpty())
+    }
+
+    @Test
+    fun `excess permutations`() {
+        val actual = "ABCD".toList().permutations(6).toList()
+        assertTrue(actual.isEmpty())
     }
 }

@@ -1,5 +1,7 @@
 package com.github.michaelbull.advent2023.iteration
 
+/* pair */
+
 fun <T> List<T>.permutationPairs(): Sequence<Pair<T, T>> {
     return permutations(
         length = 2,
@@ -7,12 +9,35 @@ fun <T> List<T>.permutationPairs(): Sequence<Pair<T, T>> {
     )
 }
 
+private fun <T> List<T>.permutationPair(indices: IntArray, count: Int): Pair<T, T> {
+    require(count == 2)
+
+    return Pair(
+        first = get(indices[0]),
+        second = get(indices[1])
+    )
+}
+
+/* triple */
+
 fun <T> List<T>.permutationTriples(): Sequence<Triple<T, T, T>> {
     return permutations(
         length = 3,
         permutation = ::permutationTriple
     )
 }
+
+private fun <T> List<T>.permutationTriple(indices: IntArray, count: Int): Triple<T, T, T> {
+    require(count == 3)
+
+    return Triple(
+        first = get(indices[0]),
+        second = get(indices[1]),
+        third = get(indices[2]),
+    )
+}
+
+/* list */
 
 fun <T> List<T>.permutations(length: Int? = null): Sequence<List<T>> {
     return permutations(
@@ -25,20 +50,17 @@ inline fun <T, V> List<T>.permutations(
     length: Int? = null,
     crossinline permutation: (IntArray, Int) -> V,
 ): Sequence<V> = sequence {
-    val count = if (length == null) {
-        size
-    } else {
-        require(length >= 0) { "length must be non-negative but was $length" }
-        length
-    }
 
-    if (size >= count) {
-        val permutationIndices = IntArray(size) { it }
+    val count = length ?: size
+
+    require(count >= 0) { "length must be non-negative but was $length" }
+
+    if (count in 1..size) {
+        val indices = IntArray(size) { it }
         val cycles = IntArray(count) { size - it }
-
-        yield(permutation(permutationIndices, count))
-
         var searching = true
+
+        yield(permutation(indices, count))
 
         while (searching) {
             var found = false
@@ -48,22 +70,21 @@ inline fun <T, V> List<T>.permutations(
                 cycles[index]--
 
                 if (cycles[index] == 0) {
-                    val indexBefore = permutationIndices[index]
+                    val indexBefore = indices[index]
 
                     for (i in index until size - 1) {
-                        permutationIndices[i] = permutationIndices[i + 1]
+                        indices[i] = indices[i + 1]
                     }
 
-                    permutationIndices[size - 1] = indexBefore
+                    indices[size - 1] = indexBefore
                     cycles[index] = size - index
-
                     index--
                 } else {
                     val i = size - cycles[index]
 
-                    permutationIndices.swapByIndex(index, i)
+                    indices.swapByIndex(index, i)
 
-                    yield(permutation(permutationIndices, count))
+                    yield(permutation(indices, count))
                     found = true
                 }
             }
@@ -81,25 +102,6 @@ private fun <T> List<T>.permutationList(indices: IntArray, count: Int): List<T> 
     return List(count) { index ->
         get(indices[index])
     }
-}
-
-private fun <T> List<T>.permutationPair(indices: IntArray, count: Int): Pair<T, T> {
-    require(count == 2)
-
-    return Pair(
-        first = get(indices[0]),
-        second = get(indices[1])
-    )
-}
-
-private fun <T> List<T>.permutationTriple(indices: IntArray, count: Int): Triple<T, T, T> {
-    require(count == 3)
-
-    return Triple(
-        first = get(indices[0]),
-        second = get(indices[1]),
-        third = get(indices[2]),
-    )
 }
 
 fun IntArray.swapByIndex(a: Int, b: Int) {

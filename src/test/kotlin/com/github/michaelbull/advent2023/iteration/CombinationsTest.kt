@@ -2,6 +2,7 @@ package com.github.michaelbull.advent2023.iteration
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class CombinationsTest {
 
@@ -47,5 +48,17 @@ class CombinationsTest {
         )
 
         assertEquals(expected, actual)
+    }
+
+    @Test
+    fun `empty combinations`() {
+        val actual = emptyList<Nothing>().combinations().toList()
+        assertTrue(actual.isEmpty())
+    }
+
+    @Test
+    fun `excess combinations`() {
+        val actual = "ABCD".toList().combinations(6).toList()
+        assertTrue(actual.isEmpty())
     }
 }

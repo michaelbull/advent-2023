@@ -1,9 +1,31 @@
 package com.github.michaelbull.advent2023.iteration
 
+/* pair */
+
+fun <A, B> Iterable<A>.product(other: Iterable<B>): Sequence<Pair<A, B>> = sequence {
+    for (a in this@product) {
+        for (b in other) {
+            yield(Pair(a, b))
+        }
+    }
+}
+
 fun <A, B> Pair<Iterable<A>, Iterable<B>>.product(): Sequence<Pair<A, B>> = sequence {
     for (a in first) {
         for (b in second) {
             yield(Pair(a, b))
+        }
+    }
+}
+
+/* triple */
+
+fun <A, B, C> Iterable<A>.product(first: Iterable<B>, second: Iterable<C>): Sequence<Triple<A, B, C>> = sequence {
+    for (a in this@product) {
+        for (b in first) {
+            for (c in second) {
+                yield(Triple(a, b, c))
+            }
         }
     }
 }
@@ -18,29 +40,29 @@ fun <A, B, C> Triple<Iterable<A>, Iterable<B>, Iterable<C>>.product(): Sequence<
     }
 }
 
+/* list */
+
 fun <T> List<List<T>>.product(): Sequence<List<T>> = sequence {
     if (isNotEmpty()) {
-        val productIndices = IntArray(size) { 0 }
-
-        yield(product(productIndices))
-
+        val indices = IntArray(size) { 0 }
         var searching = true
+
+        yield(product(indices))
 
         while (searching) {
             var found = false
-            var index = productIndices.size - 1
+            var index = indices.size - 1
 
             while (index >= 0 && !found) {
-                productIndices[index]++
+                indices[index]++
 
-                if (productIndices[index] >= this@product[index].size) {
-                    productIndices[index] = 0
+                if (indices[index] >= get(index).size) {
+                    indices[index] = 0
+                    index--
                 } else {
-                    yield(product(productIndices))
+                    yield(product(indices))
                     found = true
                 }
-
-                index--
             }
 
             if (!found) {

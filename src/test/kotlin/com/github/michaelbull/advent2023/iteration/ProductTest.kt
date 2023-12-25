@@ -2,6 +2,7 @@ package com.github.michaelbull.advent2023.iteration
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class ProductTest {
 
@@ -78,5 +79,11 @@ class ProductTest {
         )
 
         assertEquals(expected, actual)
+    }
+
+    @Test
+    fun `empty product`() {
+        val actual = Pair(emptyList<Nothing>(), emptyList<Nothing>()).product().toList()
+        assertTrue(actual.isEmpty())
     }
 }
