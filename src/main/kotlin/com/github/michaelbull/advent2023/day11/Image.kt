@@ -1,8 +1,8 @@
 package com.github.michaelbull.advent2023.day11
 
-import com.github.michaelbull.advent2023.iteration.combinationPairs
 import com.github.michaelbull.advent2023.math.Vector2
 import com.github.michaelbull.advent2023.math.manhattanDistance
+import com.github.michaelbull.itertools.pairCombinations
 
 private typealias Dimension = (Vector2) -> Int
 private typealias Axis = (Int) -> Vector2
@@ -32,7 +32,7 @@ data class Image(
 
     fun sumShortestPathLengths(): Long {
         return galaxies.toList()
-            .combinationPairs()
+            .pairCombinations()
             .sumOf { (from, to) -> manhattanDistance(from, to).toLong() }
     }
 

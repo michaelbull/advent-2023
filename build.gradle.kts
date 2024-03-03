@@ -8,12 +8,14 @@ plugins {
 
 repositories {
     mavenCentral()
+    maven { setUrl("https://oss.sonatype.org/content/repositories/snapshots") }
 }
 
 dependencies {
     implementation(kotlin("stdlib"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     implementation("org.jgrapht:jgrapht-core:1.5.2")
+    implementation("com.michael-bull.kotlin-itertools:kotlin-itertools:1.0.0-SNAPSHOT")
     testImplementation(kotlin("test"))
 }
 
