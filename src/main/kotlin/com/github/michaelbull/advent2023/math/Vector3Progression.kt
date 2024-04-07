@@ -67,16 +67,13 @@ open class Vector3Progression(
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Vector3Progression
-
-        if (xProgression != other.xProgression) return false
-        if (yProgression != other.yProgression) return false
-        if (zProgression != other.zProgression) return false
-
-        return true
+        return if (other is Vector3Progression) {
+            return xProgression == other.xProgression
+                && yProgression == other.yProgression
+                && zProgression == other.zProgression
+        } else {
+            false
+        }
     }
 
     override fun hashCode(): Int {

@@ -5,10 +5,35 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-class Vector2ProgressionIteratorTest {
+class Vector2ProgressionTest {
 
     @Test
-    fun `positive step`() {
+    fun `positive step in one dimension`() {
+        val first = Vector2(0, 0)
+        val last = Vector2(10, 10)
+        val step = Vector2(0, 3)
+
+        val progression = (first..last).step(step)
+        val iterator = progression.iterator()
+
+        assertTrue(iterator.hasNext())
+
+        val expected = listOf(
+            Vector2(0, 0),
+            Vector2(0, 3),
+            Vector2(0, 6),
+            Vector2(0, 9),
+        )
+
+        for (vector in expected) {
+            assertEquals(vector, iterator.next())
+        }
+
+        assertFalse(iterator.hasNext())
+    }
+
+    @Test
+    fun `positive step in two dimensions`() {
         val first = Vector2(0, 0)
         val last = Vector2(10, 10)
         val step = Vector2(3, 3)
@@ -45,7 +70,30 @@ class Vector2ProgressionIteratorTest {
     }
 
     @Test
-    fun `negative step`() {
+    fun `negative step in one dimensions`() {
+        val first = Vector2(10, 10)
+        val last = Vector2(0, 0)
+        val step = Vector2(3, 0)
+
+        val progression = (first downTo last).step(step)
+        val iterator = progression.iterator()
+
+        assertTrue(iterator.hasNext())
+
+        val expected = listOf(
+            Vector2(10, 10),
+            Vector2(7, 10),
+            Vector2(4, 10),
+            Vector2(1, 10),
+        )
+
+        for (vector in expected) {
+            assertEquals(vector, iterator.next())
+        }
+    }
+
+    @Test
+    fun `negative step in two dimensions`() {
         val first = Vector2(10, 10)
         val last = Vector2(0, 0)
         val step = Vector2(3, 3)

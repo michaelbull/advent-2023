@@ -5,7 +5,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-class Vector3IteratorTest {
+class Vector3ProgressionTest {
 
     @Test
     fun `positive step in one dimension`() {
