@@ -5,11 +5,16 @@ class Vector3Range(
     endInclusive: Vector3,
 ) : Vector3Progression(start, endInclusive, Vector3.UP), ClosedRange<Vector3> {
 
-    override val start: Vector3 get() = first
-    override val endInclusive: Vector3 get() = last
+    override val start: Vector3
+        get() = first
+
+    override val endInclusive: Vector3
+        get() = last
 
     override fun contains(value: Vector3): Boolean {
-        return value.x in xProgression && value.y in yProgression && value.z in zProgression
+        return value.x in xProgression
+            && value.y in yProgression
+            && value.z in zProgression
     }
 
     override fun isEmpty(): Boolean {

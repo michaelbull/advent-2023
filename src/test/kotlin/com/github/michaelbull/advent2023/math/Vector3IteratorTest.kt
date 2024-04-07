@@ -5,15 +5,81 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-class Vector3ProgressionIteratorTest {
+class Vector3IteratorTest {
 
     @Test
-    fun `positive step`() {
-        val first = Vector3(0, 0, 0)
-        val last = Vector3(10, 10, 10)
+    fun `positive step in one dimension`() {
+        val start = Vector3(0, 4, 8)
+        val endInclusive = Vector3(11, 10, 16)
+        val step = Vector3(2, 0, 0)
+
+        val progression = (start..endInclusive).step(step)
+        val iterator = progression.iterator()
+
+        assertTrue(iterator.hasNext())
+
+        val expected = listOf(
+            Vector3(0, 4, 8),
+            Vector3(2, 4, 8),
+            Vector3(4, 4, 8),
+            Vector3(6, 4, 8),
+            Vector3(8, 4, 8),
+            Vector3(10, 4, 8),
+        )
+
+        for (vector in expected) {
+            assertEquals(vector, iterator.next())
+        }
+
+        assertFalse(iterator.hasNext())
+    }
+
+    @Test
+    fun `positive step in two dimensions`() {
+        val start = Vector3(0, 4, 8)
+        val endInclusive = Vector3(11, 10, 16)
+        val step = Vector3(2, 3, 0)
+
+        val progression = (start..endInclusive).step(step)
+        val iterator = progression.iterator()
+
+        assertTrue(iterator.hasNext())
+
+        val expected = listOf(
+            Vector3(0, 4, 8),
+            Vector3(2, 4, 8),
+            Vector3(4, 4, 8),
+            Vector3(6, 4, 8),
+            Vector3(8, 4, 8),
+            Vector3(10, 4, 8),
+            Vector3(0, 7, 8),
+            Vector3(2, 7, 8),
+            Vector3(4, 7, 8),
+            Vector3(6, 7, 8),
+            Vector3(8, 7, 8),
+            Vector3(10, 7, 8),
+            Vector3(0, 10, 8),
+            Vector3(2, 10, 8),
+            Vector3(4, 10, 8),
+            Vector3(6, 10, 8),
+            Vector3(8, 10, 8),
+            Vector3(10, 10, 8),
+        )
+
+        for (vector in expected) {
+            assertEquals(vector, iterator.next())
+        }
+
+        assertFalse(iterator.hasNext())
+    }
+
+    @Test
+    fun `positive step in three dimensions`() {
+        val start = Vector3(0, 0, 0)
+        val endInclusive = Vector3(10, 10, 10)
         val step = Vector3(3, 3, 3)
 
-        val progression = (first..last).step(step)
+        val progression = (start..endInclusive).step(step)
         val iterator = progression.iterator()
 
         assertTrue(iterator.hasNext())
@@ -93,12 +159,74 @@ class Vector3ProgressionIteratorTest {
     }
 
     @Test
-    fun `negative step`() {
-        val first = Vector3(10, 10, 10)
-        val last = Vector3(0, 0, 0)
+    fun `negative step in one dimension`() {
+        val start = Vector3(10, 10, 10)
+        val endInclusive = Vector3(0, 0, 0)
+        val step = Vector3(3, 0, 0)
+
+        val progression = (start downTo endInclusive).step(step)
+        val iterator = progression.iterator()
+
+        assertTrue(iterator.hasNext())
+
+        val expected = listOf(
+            Vector3(10, 10, 10),
+            Vector3(7, 10, 10),
+            Vector3(4, 10, 10),
+            Vector3(1, 10, 10),
+        )
+
+        for (vector in expected) {
+            assertEquals(vector, iterator.next())
+        }
+
+        assertFalse(iterator.hasNext())
+    }
+
+    @Test
+    fun `negative step in two dimensions`() {
+        val start = Vector3(10, 10, 10)
+        val endInclusive = Vector3(0, 0, 0)
+        val step = Vector3(3, 3, 0)
+
+        val progression = (start downTo endInclusive).step(step)
+        val iterator = progression.iterator()
+
+        assertTrue(iterator.hasNext())
+
+        val expected = listOf(
+            Vector3(10, 10, 10),
+            Vector3(7, 10, 10),
+            Vector3(4, 10, 10),
+            Vector3(1, 10, 10),
+            Vector3(10, 7, 10),
+            Vector3(7, 7, 10),
+            Vector3(4, 7, 10),
+            Vector3(1, 7, 10),
+            Vector3(10, 4, 10),
+            Vector3(7, 4, 10),
+            Vector3(4, 4, 10),
+            Vector3(1, 4, 10),
+            Vector3(10, 1, 10),
+            Vector3(7, 1, 10),
+            Vector3(4, 1, 10),
+            Vector3(1, 1, 10),
+        )
+
+        for (vector in expected) {
+            assertEquals(vector, iterator.next())
+        }
+
+        assertFalse(iterator.hasNext())
+    }
+
+    @Test
+    fun `negative step in three dimensions`() {
+        val start = Vector3(10, 10, 10)
+        val endInclusive = Vector3(0, 0, 0)
         val step = Vector3(3, 3, 3)
 
-        val progression = (first downTo last).step(step)
+        val progression = (start downTo endInclusive).step(step)
         val iterator = progression.iterator()
 
         assertTrue(iterator.hasNext())

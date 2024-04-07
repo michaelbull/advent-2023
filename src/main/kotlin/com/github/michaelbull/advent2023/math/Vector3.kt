@@ -174,8 +174,22 @@ data class Vector3(
     }
 
     companion object {
-        val ZERO = Vector3(0, 0, 0)
-        val UP = Vector3(+1, +1, +1)
-        val DOWN = Vector3(-1, -1, -1)
+        val ZERO = Vector3(
+            x = 0,
+            y = 0,
+            z = 0
+        )
+
+        val UP = Vector3(
+            x = +1,
+            y = +1,
+            z = +1
+        )
+
+        val DOWN = Vector3(
+            x = -1,
+            y = -1,
+            z = -1
+        )
     }
 }
