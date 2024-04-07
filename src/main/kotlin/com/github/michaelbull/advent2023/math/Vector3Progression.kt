@@ -40,11 +40,7 @@ open class Vector3Progression(
     val yProgression = dimensionProgression(start.y, endInclusive.y, step.y)
     val zProgression = dimensionProgression(start.z, endInclusive.z, step.z)
 
-    val first: Vector3 = Vector3(
-        x = if (xProgression.isEmpty()) start.x else xProgression.first,
-        y = if (yProgression.isEmpty()) start.y else yProgression.first,
-        z = if (zProgression.isEmpty()) start.z else zProgression.first,
-    )
+    val first: Vector3 = start
 
     val last: Vector3 = Vector3(
         x = if (xProgression.isEmpty()) start.x else xProgression.last,
