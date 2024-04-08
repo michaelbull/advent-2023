@@ -12,9 +12,12 @@ class Vector3Range(
         get() = last
 
     override fun contains(value: Vector3): Boolean {
-        return value.x in xProgression
-            && value.y in yProgression
-            && value.z in zProgression
+        return value.x >= first.x
+            && value.y >= first.y
+            && value.z >= first.z
+            && value.x <= last.x
+            && value.y <= last.y
+            && value.z <= last.z
     }
 
     override fun isEmpty(): Boolean {
@@ -48,6 +51,6 @@ class Vector3Range(
     }
 
     companion object {
-        val EMPTY = Vector3Range(Vector3.UP, Vector3.ZERO)
+        val EMPTY = Vector3Range(Vector3.MAX_VALUE, Vector3.MIN_VALUE)
     }
 }

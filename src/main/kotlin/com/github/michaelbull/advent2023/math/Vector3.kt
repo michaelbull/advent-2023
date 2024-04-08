@@ -12,7 +12,11 @@ data class Vector3(
     val z: Int = 0,
 ) : Comparable<Vector3> {
 
-    constructor(triple: Triple<Int, Int, Int>) : this(triple.first, triple.second, triple.third)
+    constructor(triple: Triple<Int, Int, Int>) : this(
+        x = triple.first,
+        y = triple.second,
+        z = triple.third
+    )
 
     operator fun unaryPlus(): Vector3 {
         return this
@@ -108,9 +112,9 @@ data class Vector3(
 
     operator fun rem(range: Vector3Range): Vector3 {
         return copy(
-            x = this.x % range.xProgression,
-            y = this.y % range.yProgression,
-            z = this.z % range.zProgression,
+            x = this.x % range.xRange,
+            y = this.y % range.yRange,
+            z = this.z % range.zRange,
         )
     }
 
@@ -174,6 +178,18 @@ data class Vector3(
     }
 
     companion object {
+        val MIN_VALUE = Vector3(
+            x = Int.MIN_VALUE,
+            y = Int.MIN_VALUE,
+            z = Int.MIN_VALUE,
+        )
+
+        val MAX_VALUE = Vector3(
+            x = Int.MAX_VALUE,
+            y = Int.MAX_VALUE,
+            z = Int.MAX_VALUE,
+        )
+
         val ZERO = Vector3(
             x = 0,
             y = 0,

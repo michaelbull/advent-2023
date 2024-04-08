@@ -8,9 +8,45 @@ import kotlin.test.assertTrue
 class Vector3ProgressionTest {
 
     @Test
+    fun `empty progression in one dimension`() {
+        val start = Vector3(10, 0, 0)
+        val endInclusive = Vector3(0, 0, 0)
+        val step = Vector3(1, 0, 0)
+
+        val progression = (start..endInclusive).step(step)
+        val iterator = progression.iterator()
+
+        assertFalse(iterator.hasNext())
+    }
+
+    @Test
+    fun `empty progression in two dimensions`() {
+        val start = Vector3(10, 10, 0)
+        val endInclusive = Vector3(0, 0, 0)
+        val step = Vector3(1, 1, 0)
+
+        val progression = (start..endInclusive).step(step)
+        val iterator = progression.iterator()
+
+        assertFalse(iterator.hasNext())
+    }
+
+    @Test
+    fun `empty progression in three dimensions`() {
+        val start = Vector3(10, 10, 3)
+        val endInclusive = Vector3(0, 0, 0)
+        val step = Vector3(1, 1, 1)
+
+        val progression = (start..endInclusive).step(step)
+        val iterator = progression.iterator()
+
+        assertFalse(iterator.hasNext())
+    }
+
+    @Test
     fun `positive step in one dimension`() {
         val start = Vector3(0, 4, 8)
-        val endInclusive = Vector3(11, 10, 16)
+        val endInclusive = Vector3(11, 4, 8)
         val step = Vector3(2, 0, 0)
 
         val progression = (start..endInclusive).step(step)
@@ -37,7 +73,7 @@ class Vector3ProgressionTest {
     @Test
     fun `positive step in two dimensions`() {
         val start = Vector3(0, 4, 8)
-        val endInclusive = Vector3(11, 10, 16)
+        val endInclusive = Vector3(11, 10, 8)
         val step = Vector3(2, 3, 0)
 
         val progression = (start..endInclusive).step(step)
@@ -161,7 +197,7 @@ class Vector3ProgressionTest {
     @Test
     fun `negative step in one dimension`() {
         val start = Vector3(10, 10, 10)
-        val endInclusive = Vector3(0, 0, 0)
+        val endInclusive = Vector3(0, 10, 10)
         val step = Vector3(3, 0, 0)
 
         val progression = (start downTo endInclusive).step(step)
@@ -186,7 +222,7 @@ class Vector3ProgressionTest {
     @Test
     fun `negative step in two dimensions`() {
         val start = Vector3(10, 10, 10)
-        val endInclusive = Vector3(0, 0, 0)
+        val endInclusive = Vector3(0, 0, 10)
         val step = Vector3(3, 3, 0)
 
         val progression = (start downTo endInclusive).step(step)

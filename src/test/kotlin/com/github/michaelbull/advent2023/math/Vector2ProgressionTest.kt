@@ -8,9 +8,33 @@ import kotlin.test.assertTrue
 class Vector2ProgressionTest {
 
     @Test
+    fun `empty progression in one dimension`() {
+        val start = Vector2(10, 0)
+        val endInclusive = Vector2(0, 0)
+        val step = Vector2(1, 0)
+
+        val progression = (start..endInclusive).step(step)
+        val iterator = progression.iterator()
+
+        assertFalse(iterator.hasNext())
+    }
+
+    @Test
+    fun `empty progression in two dimensions`() {
+        val start = Vector2(10, 10)
+        val endInclusive = Vector2(0, 0)
+        val step = Vector2(1, 1)
+
+        val progression = (start..endInclusive).step(step)
+        val iterator = progression.iterator()
+
+        assertFalse(iterator.hasNext())
+    }
+
+    @Test
     fun `positive step in one dimension`() {
         val first = Vector2(0, 0)
-        val last = Vector2(10, 10)
+        val last = Vector2(0, 10)
         val step = Vector2(0, 3)
 
         val progression = (first..last).step(step)
@@ -70,9 +94,9 @@ class Vector2ProgressionTest {
     }
 
     @Test
-    fun `negative step in one dimensions`() {
+    fun `negative step in one dimension`() {
         val first = Vector2(10, 10)
-        val last = Vector2(0, 0)
+        val last = Vector2(0, 10)
         val step = Vector2(3, 0)
 
         val progression = (first downTo last).step(step)

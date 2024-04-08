@@ -51,13 +51,13 @@ class Vector2RangeTest {
     @Test
     fun `isEmpty on empty x axis`() {
         val range = Vector2(1, 0)..Vector2(0, 0)
-        assertFalse(range.isEmpty())
+        assertTrue(range.isEmpty())
     }
 
     @Test
     fun `isEmpty on empty y axis`() {
         val range = Vector2(0, 1)..Vector2(0, 0)
-        assertFalse(range.isEmpty())
+        assertTrue(range.isEmpty())
     }
 
     @Test

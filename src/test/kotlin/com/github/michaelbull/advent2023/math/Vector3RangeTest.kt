@@ -63,19 +63,19 @@ class Vector3RangeTest {
     @Test
     fun `isEmpty on empty x axis`() {
         val range = Vector3(1, 0, 0)..Vector3(0, 0, 0)
-        assertFalse(range.isEmpty())
+        assertTrue(range.isEmpty())
     }
 
     @Test
     fun `isEmpty on empty y axis`() {
         val range = Vector3(0, 1, 0)..Vector3(0, 0, 0)
-        assertFalse(range.isEmpty())
+        assertTrue(range.isEmpty())
     }
 
     @Test
     fun `isEmpty on empty z axis`() {
         val range = Vector3(0, 0, 1)..Vector3(0, 0, 0)
-        assertFalse(range.isEmpty())
+        assertTrue(range.isEmpty())
     }
 
     @Test

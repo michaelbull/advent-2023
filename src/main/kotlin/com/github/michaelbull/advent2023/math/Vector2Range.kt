@@ -9,7 +9,10 @@ class Vector2Range(
     override val endInclusive: Vector2 get() = last
 
     override fun contains(value: Vector2): Boolean {
-        return value.x in xProgression && value.y in yProgression
+        return value.x >= first.x
+            && value.y >= first.y
+            && value.x <= last.x
+            && value.y <= last.y
     }
 
     override fun isEmpty(): Boolean {
@@ -43,6 +46,6 @@ class Vector2Range(
     }
 
     companion object {
-        val EMPTY = Vector2Range(Vector2.UP, Vector2.ZERO)
+        val EMPTY = Vector2Range(Vector2.MAX_VALUE, Vector2.MIN_VALUE)
     }
 }

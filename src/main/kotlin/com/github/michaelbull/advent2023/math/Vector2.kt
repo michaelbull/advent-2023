@@ -11,7 +11,10 @@ data class Vector2(
     val y: Int = 0,
 ) : Comparable<Vector2> {
 
-    constructor(pair: Pair<Int, Int>) : this(pair.first, pair.second)
+    constructor(pair: Pair<Int, Int>) : this(
+        x = pair.first,
+        y = pair.second
+    )
 
     operator fun unaryPlus(): Vector2 {
         return this
@@ -96,8 +99,8 @@ data class Vector2(
 
     operator fun rem(range: Vector2Range): Vector2 {
         return copy(
-            x = this.x % range.xProgression,
-            y = this.y % range.yProgression,
+            x = this.x % range.xRange,
+            y = this.y % range.yRange,
         )
     }
 
@@ -153,6 +156,9 @@ data class Vector2(
     }
 
     companion object {
+        val MIN_VALUE = Vector2(Int.MIN_VALUE, Int.MIN_VALUE)
+        val MAX_VALUE = Vector2(Int.MAX_VALUE, Int.MAX_VALUE)
+
         val ZERO = Vector2(0, 0)
         val UP = Vector2(+1, +1)
         val DOWN = Vector2(-1, -1)

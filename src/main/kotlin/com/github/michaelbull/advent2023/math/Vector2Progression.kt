@@ -9,74 +9,80 @@ infix fun Vector2Progression.step(step: Vector2): Vector2Progression {
     require(step.y >= 0) { "Step Y must be non-negative, was: ${step.y}." }
 
     val progressionStep = Vector2(
-        x = if (this.xProgression.step > 0) step.x else -step.x,
-        y = if (this.yProgression.step > 0) step.y else -step.y,
+        x = if (this.step.x > 0) step.x else -step.x,
+        y = if (this.step.y > 0) step.y else -step.y,
     )
 
     return Vector2Progression.fromClosedRange(first, last, progressionStep)
 }
 
-private fun dimensionProgression(rangeStart: Int, rangeEnd: Int, step: Int): IntProgression {
-    return if (step == 0) {
-        IntRange.EMPTY
-    } else {
-        IntProgression.fromClosedRange(rangeStart, rangeEnd, step)
-    }
-}
-
 open class Vector2Progression(
-    start: Vector2,
-    endInclusive: Vector2,
-    step: Vector2,
+    private val start: Vector2,
+    private val endInclusive: Vector2,
+    val step: Vector2,
 ) : Iterable<Vector2> {
+
+    val first: Vector2 = start
+    val last: Vector2
+
+    private val isEmpty: Boolean
 
     init {
         require(step != Vector2.ZERO) { "Step must be non-zero." }
+
+        val emptyX = isEmpty(Vector2::x)
+        val emptyY = isEmpty(Vector2::y)
+
+        isEmpty = emptyX || emptyY
+
+        last = Vector2(
+            x = if (emptyX) endInclusive.x else getLastElement(Vector2::x),
+            y = if (emptyY) endInclusive.y else getLastElement(Vector2::y),
+        )
     }
 
-    val xProgression = dimensionProgression(start.x, endInclusive.x, step.x)
-    val yProgression = dimensionProgression(start.y, endInclusive.y, step.y)
+    val xRange
+        get() = first.x..last.x
 
-    val first: Vector2 = Vector2(
-        x = if (xProgression.isEmpty()) start.x else xProgression.first,
-        y = if (yProgression.isEmpty()) start.y else yProgression.first,
-    )
-
-    val last: Vector2 = Vector2(
-        x = if (xProgression.isEmpty()) start.x else xProgression.last,
-        y = if (yProgression.isEmpty()) start.y else yProgression.last,
-    )
+    val yRange
+        get() = first.y..last.y
 
     override fun iterator(): Iterator<Vector2> {
-        return Vector2Iterator()
+        return if (isEmpty) {
+            EmptyIterator
+        } else {
+            ProgressionIterator()
+        }
     }
 
     open fun isEmpty(): Boolean {
-        return xProgression.isEmpty()
-            && yProgression.isEmpty()
+        return isEmpty
     }
 
     fun isNotEmpty(): Boolean {
         return !isEmpty()
     }
 
-    override fun equals(other: Any?): Boolean {
-        return if (other is Vector2Progression) {
-            return xProgression == other.xProgression
-                && yProgression == other.yProgression
-        } else {
+    private inline fun isEmpty(dimension: (Vector2) -> Int): Boolean = when {
+        dimension(step) > 0 -> dimension(start) > dimension(endInclusive)
+        dimension(step) < 0 -> dimension(start) < dimension(endInclusive)
+        else -> if (dimension(start) == dimension(endInclusive)) {
             false
+        } else {
+            throw IllegalArgumentException("Start and end must be equal when step is zero.")
         }
     }
 
-    override fun hashCode(): Int {
-        var result = xProgression.hashCode()
-        result = 31 * result + yProgression.hashCode()
-        return result
-    }
+    private inline fun getLastElement(dimension: (Vector2) -> Int): Int {
+        val start = dimension(this.start)
+        val end = dimension(this.endInclusive)
+        val step = dimension(this.step)
 
-    override fun toString(): String {
-        return "x=$xProgression, y=$yProgression"
+        return if (step == 0) {
+            start
+        } else {
+            IntProgression.fromClosedRange(start, end, step).last
+        }
     }
 
     companion object {
@@ -85,20 +91,14 @@ open class Vector2Progression(
         }
     }
 
-    private inner class Vector2Iterator : Iterator<Vector2> {
-        private var xIterator = xProgression.iterator()
-        private var yIterator = yProgression.iterator()
+    private object EmptyIterator : Iterator<Vector2> {
+        override fun hasNext() = false
+        override fun next() = throw NoSuchElementException()
+    }
 
-        private var hasNext: Boolean = !xProgression.isEmpty() || !yProgression.isEmpty()
-
-        private var next = if (hasNext) {
-            Vector2(
-                x = if (xProgression.isEmpty()) first.x else xIterator.nextInt(),
-                y = if (yProgression.isEmpty()) first.y else yIterator.nextInt(),
-            )
-        } else {
-            last
-        }
+    private inner class ProgressionIterator : Iterator<Vector2> {
+        private var hasNext: Boolean = true
+        private var next = first
 
         override fun hasNext(): Boolean = hasNext
 
@@ -106,11 +106,8 @@ open class Vector2Progression(
             val value = next
 
             if (value == last) {
-                if (hasNext) {
-                    hasNext = false
-                } else {
-                    throw NoSuchElementException()
-                }
+                if (!hasNext) throw NoSuchElementException()
+                hasNext = false
             } else {
                 next = next.step()
             }
@@ -119,28 +116,14 @@ open class Vector2Progression(
         }
 
         private fun Vector2.step() = when {
-            xIterator.hasNext() -> {
-                copy(
-                    x = xIterator.nextInt()
-                )
-            }
+            x != last.x -> copy(
+                x = x + step.x,
+            )
 
-            yIterator.hasNext() -> when {
-                xProgression.isEmpty() -> {
-                    copy(
-                        y = yIterator.nextInt()
-                    )
-                }
-
-                else -> {
-                    xIterator = xProgression.iterator()
-
-                    copy(
-                        x = xIterator.nextInt(),
-                        y = yIterator.nextInt(),
-                    )
-                }
-            }
+            y != last.y -> copy(
+                x = first.x,
+                y = y + step.y,
+            )
 
             else -> throw NoSuchElementException()
         }
